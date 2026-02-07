@@ -98,7 +98,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — project.md/state.md 템플릿에 Codebase Context 섹션 추가 + 브라운필드 가이던스 확장
+- [x] 05-01-PLAN.md — project.md/state.md 템플릿에 Codebase Context 섹션 추가 + 브라운필드 가이던스 확장
 - [ ] 05-02-PLAN.md — 브라운필드 컨텍스트 전파 체인 종단간 검증
 
 **Artifacts:**
