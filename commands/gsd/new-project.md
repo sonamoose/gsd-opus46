@@ -343,7 +343,6 @@ Create `.planning/config.json` with all settings:
   "depth": "quick|standard|comprehensive",
   "parallelization": true|false,
   "commit_docs": true|false,
-  "model_profile": "quality|balanced|budget",
   "workflow": {
     "research": true|false,
     "plan_check": true|false,
@@ -376,25 +375,10 @@ EOF
 
 **Note:** Run `/gsd:settings` anytime to update these preferences.
 
-## Phase 5.5: Resolve Model Profile
+## Phase 5.5: Effort Level
 
-Read model profile for agent spawning:
-
-```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
-```
-
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-project-researcher | opus | sonnet | haiku |
-| gsd-research-synthesizer | sonnet | sonnet | haiku |
-| gsd-roadmapper | opus | sonnet | sonnet |
-
-Store resolved models for use in Task calls below.
+**Effort level:** Agents use the session's effort level set via `/model` or `CLAUDE_CODE_EFFORT_LEVEL`.
+See `~/.claude/get-shit-done/references/model-profiles.md` for recommended levels per agent.
 
 ## Phase 6: Research Decision
 

@@ -52,7 +52,7 @@ If missing both ROADMAP.md and PROJECT.md: suggest `/gsd:new-project`.
 - Read `.planning/STATE.md` for living memory (position, decisions, issues)
 - Read `.planning/ROADMAP.md` for phase structure and objectives
 - Read `.planning/PROJECT.md` for current state (What This Is, Core Value, Requirements)
-- Read `.planning/config.json` for settings (model_profile, workflow toggles)
+- Read `.planning/config.json` for settings (workflow toggles)
   </step>
 
 <step name="recent">
@@ -81,7 +81,7 @@ If missing both ROADMAP.md and PROJECT.md: suggest `/gsd:new-project`.
 # [Project Name]
 
 **Progress:** [████████░░] 8/10 plans complete
-**Profile:** [quality/balanced/budget]
+**Effort:** [via /model or CLAUDE_CODE_EFFORT_LEVEL]
 
 ## Recent Work
 - [Phase X, Plan Y]: [what was accomplished - 1 line]

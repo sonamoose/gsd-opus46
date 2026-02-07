@@ -466,8 +466,8 @@ You're never locked in. The system adapts.
 
 | Command | What it does |
 |---------|--------------|
-| `/gsd:settings` | Configure model profile and workflow agents |
-| `/gsd:set-profile <profile>` | Switch model profile (quality/balanced/budget) |
+| `/gsd:settings` | Configure workflow agents |
+| `/gsd:set-effort` | View recommended effort levels and adjust via /model |
 | `/gsd:add-todo [desc]` | Capture idea for later |
 | `/gsd:check-todos` | List pending todos |
 | `/gsd:debug [desc]` | Systematic debugging with persistent state |

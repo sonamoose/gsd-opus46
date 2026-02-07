@@ -30,21 +30,8 @@ ls .planning/debug/*.md 2>/dev/null | grep -v resolved | head -5
 
 ## 0. Resolve Model Profile
 
-Read model profile for agent spawning:
-
-```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
-```
-
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-debugger | opus | sonnet | sonnet |
-
-Store resolved model for use in Task calls below.
+**Effort level:** Agents use the session's effort level set via `/model` or `CLAUDE_CODE_EFFORT_LEVEL`.
+See `~/.claude/get-shit-done/references/model-profiles.md` for recommended levels per agent.
 
 ## 1. Check Active Sessions
 
