@@ -12,9 +12,9 @@
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — brownfield-summary.md 분석 요약 출력 템플릿 생성
-- [ ] 01-02-PLAN.md — gsd-brownfield-analyzer.md 코드베이스 분석 에이전트 정의
-- [ ] 01-03-PLAN.md — 모드 감지 로직 사양 (다중 시그널 + 언어 감지 + 스캐폴딩 다운그레이드)
+- [x] 01-01-PLAN.md — brownfield-summary.md 분석 요약 출력 템플릿 생성
+- [x] 01-02-PLAN.md — gsd-brownfield-analyzer.md 코드베이스 분석 에이전트 정의
+- [x] 01-03-PLAN.md — 모드 감지 로직 사양 (다중 시그널 + 언어 감지 + 스캐폴딩 다운그레이드)
 
 **Artifacts:**
 - `get-shit-done/templates/brownfield-summary.md` (NEW)

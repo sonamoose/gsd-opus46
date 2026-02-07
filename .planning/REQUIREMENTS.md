@@ -7,10 +7,10 @@
 
 ### Mode Detection (모드 감지)
 
-- [ ] **DETECT-01**: 코드 파일과 패키지 매니저 존재 여부로 브라운필드/그린필드 자동 판단
-- [ ] **DETECT-02**: 다중 시그널 감지 — 파일 수, 디렉토리 구조, git 히스토리 등 복합 판단으로 오탐 방지
-- [ ] **DETECT-03**: 주요 언어 자동 판별 — JS/TS, Python, Go, Rust, Java, Swift 등 감지
-- [ ] **DETECT-04**: 스캐폴딩 프로젝트 감지 시 그린필드로 그레이스풀 다운그레이드
+- [x] **DETECT-01**: 코드 파일과 패키지 매니저 존재 여부로 브라운필드/그린필드 자동 판단
+- [x] **DETECT-02**: 다중 시그널 감지 — 파일 수, 디렉토리 구조, git 히스토리 등 복합 판단으로 오탐 방지
+- [x] **DETECT-03**: 주요 언어 자동 판별 — JS/TS, Python, Go, Rust, Java, Swift 등 감지
+- [x] **DETECT-04**: 스캐폴딩 프로젝트 감지 시 그린필드로 그레이스풀 다운그레이드
 
 ### Codebase Analysis (코드베이스 분석)
 
@@ -34,9 +34,9 @@
 
 ### Infrastructure (인프라)
 
-- [ ] **INFRA-01**: gsd-brownfield-analyzer 에이전트 생성 — 7개 코드베이스 문서를 종합 분석
+- [x] **INFRA-01**: gsd-brownfield-analyzer 에이전트 생성 — 7개 코드베이스 문서를 종합 분석
 - [ ] **INFRA-02**: brownfield-flow 워크플로우 생성 — 분석→결정→실행 파이프라인 오케스트레이션
-- [ ] **INFRA-03**: brownfield-summary 템플릿 생성 — 분석 결과 요약 출력 구조 정의
+- [x] **INFRA-03**: brownfield-summary 템플릿 생성 — 분석 결과 요약 출력 구조 정의
 - [ ] **INFRA-04**: new-project.md 커맨드 수정 — Phase 2-4에 브라운필드 분기 로직 통합
 
 ## v2 Requirements
@@ -67,12 +67,12 @@
 
 | Requirement | Phase | Phase Name | Status |
 |-------------|-------|------------|--------|
-| DETECT-01 | Phase 1 | Foundation | Pending |
-| DETECT-02 | Phase 1 | Foundation | Pending |
-| DETECT-03 | Phase 1 | Foundation | Pending |
-| DETECT-04 | Phase 1 | Foundation | Pending |
-| INFRA-01 | Phase 1 | Foundation | Pending |
-| INFRA-03 | Phase 1 | Foundation | Pending |
+| DETECT-01 | Phase 1 | Foundation | Complete |
+| DETECT-02 | Phase 1 | Foundation | Complete |
+| DETECT-03 | Phase 1 | Foundation | Complete |
+| DETECT-04 | Phase 1 | Foundation | Complete |
+| INFRA-01 | Phase 1 | Foundation | Complete |
+| INFRA-03 | Phase 1 | Foundation | Complete |
 | ANALYSIS-01 | Phase 2 | Analysis Pipeline | Pending |
 | ANALYSIS-02 | Phase 2 | Analysis Pipeline | Pending |
 | ANALYSIS-03 | Phase 2 | Analysis Pipeline | Pending |
