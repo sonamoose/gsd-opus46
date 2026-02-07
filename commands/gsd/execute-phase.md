@@ -38,23 +38,10 @@ Phase: $ARGUMENTS
 </context>
 
 <process>
-0. **Resolve Model Profile**
+0. **Effort Level**
 
-   Read model profile for agent spawning:
-   ```bash
-   MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
-   ```
-
-   Default to "balanced" if not set.
-
-   **Model lookup table:**
-
-   | Agent | quality | balanced | budget |
-   |-------|---------|----------|--------|
-   | gsd-executor | opus | sonnet | sonnet |
-   | gsd-verifier | sonnet | sonnet | haiku |
-
-   Store resolved models for use in Task calls below.
+   Agents use the session's effort level set via `/model` or `CLAUDE_CODE_EFFORT_LEVEL`.
+   See `~/.claude/get-shit-done/references/model-profiles.md` for recommended levels per agent.
 
 1. **Validate phase exists**
    - Find phase directory matching argument
