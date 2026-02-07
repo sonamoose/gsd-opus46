@@ -137,7 +137,6 @@ Write to: .planning/phases/${PHASE}-{slug}/${PHASE}-RESEARCH.md
 Task(
   prompt="First, read ~/.claude/agents/gsd-phase-researcher.md for your role and instructions.\n\n" + filled_prompt,
   subagent_type="general-purpose",
-  model="{researcher_model}",
   description="Research Phase {phase}"
 )
 ```
@@ -171,7 +170,6 @@ Research file: @.planning/phases/${PHASE}-{slug}/${PHASE}-RESEARCH.md
 Task(
   prompt="First, read ~/.claude/agents/gsd-phase-researcher.md for your role and instructions.\n\n" + continuation_prompt,
   subagent_type="general-purpose",
-  model="{researcher_model}",
   description="Continue research Phase {phase}"
 )
 ```

@@ -88,8 +88,7 @@ Phase exports: {from SUMMARYs}
 API routes: {routes created}
 
 Verify cross-phase wiring and E2E user flows.",
-  subagent_type="gsd-integration-checker",
-  model="{integration_checker_model}"
+  subagent_type="gsd-integration-checker"
 )
 ```
 
