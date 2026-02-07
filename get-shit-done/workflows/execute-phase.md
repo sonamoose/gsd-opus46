@@ -75,6 +75,13 @@ PARALLELIZATION=$(cat .planning/config.json 2>/dev/null | grep -o '"parallelizat
 
 Store `PARALLELIZATION` for use in wave execution step. When `false`, plans within a wave execute sequentially instead of in parallel.
 
+**Load Agent Teams config:**
+
+```bash
+# Check if Agent Teams is available (default: not set)
+AGENT_TEAMS=$(echo $CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS)
+```
+
 **Load git branching config:**
 
 ```bash
@@ -287,9 +294,15 @@ Execute each wave in sequence. Autonomous plans within a wave run in parallel **
    CONFIG_CONTENT=$(cat .planning/config.json 2>/dev/null)
    ```
 
-   **If `PARALLELIZATION=true` (default):** Use Task tool with multiple parallel calls.
-   
-   **If `PARALLELIZATION=false`:** Spawn agents one at a time, waiting for each to complete before starting the next. This ensures no concurrent file modifications or build operations.
+   **If `AGENT_TEAMS` is set AND `PARALLELIZATION=true`:**
+
+   Output: "Executing with Opus 4.6 Agent Teams..."
+
+   Spawn teammates via Agent Teams. Register each plan in the wave as a shared task. Teammates autonomously claim and execute plans. Wait for all teammates to complete, then clean up team.
+
+   **If `PARALLELIZATION=true` (default, no Agent Teams):** Use Task tool with multiple parallel calls.
+
+   **If `PARALLELIZATION=false`:** Spawn agents one at a time, waiting for each to complete before starting the next. This ensures no concurrent file modifications or build operations. Always uses Task() regardless of AGENT_TEAMS setting.
 
    Each agent gets prompt with inlined content:
 
