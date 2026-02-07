@@ -216,7 +216,7 @@ Tasks 2-5: Main context (need decision from checkpoint 1)
 No segmentation benefit - execute entirely in main
 ```
 
-**4. Why segment:** Fresh context per subagent preserves peak quality. Main context stays lean (~15% usage).
+**4. Why segment:** Isolated context per subagent preserves peak quality. Main context stays lean.
 
 **5. Implementation:**
 
@@ -1723,8 +1723,6 @@ Summary: .planning/phases/{phase-dir}/{phase}-{plan}-SUMMARY.md
 
 `/gsd:execute-phase {phase}`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**
@@ -1784,8 +1782,6 @@ All {Y} plans finished.
 
 `/gsd:plan-phase {Z+1}`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**
@@ -1821,8 +1817,6 @@ All {Y} plans finished.
 **Complete Milestone** — archive and prepare for next
 
 `/gsd:complete-milestone`
-
-<sub>`/clear` first → fresh context window</sub>
 
 ---
 

@@ -955,8 +955,6 @@ Present completion with next steps:
 
 /gsd:discuss-phase 1 — gather context and clarify approach
 
-<sub>/clear first → fresh context window</sub>
-
 ---
 
 **Also available:**

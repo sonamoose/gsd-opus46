@@ -1,14 +1,14 @@
 <purpose>
 Orchestrate parallel codebase mapper agents to analyze codebase and produce structured documents in .planning/codebase/
 
-Each agent has fresh context, explores a specific focus area, and **writes documents directly**. The orchestrator only receives confirmation + line counts, then writes a summary.
+Each agent has isolated context, explores a specific focus area, and **writes documents directly**. The orchestrator only receives confirmation + line counts, then writes a summary.
 
 Output: .planning/codebase/ folder with 7 structured documents about the codebase state.
 </purpose>
 
 <philosophy>
 **Why dedicated mapper agents:**
-- Fresh context per domain (no token contamination)
+- Isolated context per domain (no token contamination)
 - Agents write documents directly (no context transfer back to orchestrator)
 - Orchestrator only summarizes what was created (minimal context usage)
 - Faster execution (agents run simultaneously)
@@ -328,8 +328,6 @@ Created .planning/codebase/:
 **Initialize project** — use codebase context for planning
 
 `/gsd:new-project`
-
-<sub>`/clear` first → fresh context window</sub>
 
 ---
 

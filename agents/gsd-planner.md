@@ -1305,7 +1305,6 @@ Return structured planning outcome to orchestrator.
 
 Execute: `/gsd:execute-phase {phase}`
 
-<sub>`/clear` first - fresh context window</sub>
 ```
 
 ## Checkpoint Reached

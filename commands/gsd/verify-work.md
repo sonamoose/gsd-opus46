@@ -50,7 +50,7 @@ Phase: $ARGUMENTS (optional)
    - Spawn gsd-planner in --gaps mode to create fix plans
    - Spawn gsd-plan-checker to verify fix plans
    - Iterate planner ↔ checker until plans pass (max 3)
-   - Present ready status with `/clear` then `/gsd:execute-phase`
+   - Present ready status with `/gsd:execute-phase`
 </process>
 
 <anti_patterns>
@@ -92,8 +92,6 @@ UAT complete ✓
 
 /gsd:discuss-phase {Z+1} — gather context and clarify approach
 
-<sub>/clear first → fresh context window</sub>
-
 ───────────────────────────────────────────────────────────────
 
 **Also available:**
@@ -122,8 +120,6 @@ Final phase verified ✓
 **Audit milestone** — verify requirements, cross-phase integration, E2E flows
 
 /gsd:audit-milestone
-
-<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -157,8 +153,6 @@ Fix plans verified ✓
 **Execute fix plans** — run diagnosed fixes
 
 /gsd:execute-phase {Z} --gaps-only
-
-<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 

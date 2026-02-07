@@ -838,8 +838,6 @@ Tag: v[X.Y]
 
 `/gsd:new-milestone`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 ```
 

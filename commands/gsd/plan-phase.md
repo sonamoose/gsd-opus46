@@ -25,7 +25,7 @@ Create executable phase prompts (PLAN.md files) for a roadmap phase with integra
 
 **Orchestrator role:** Parse arguments, validate phase, research domain (unless skipped or exists), spawn gsd-planner agent, verify plans with gsd-plan-checker, iterate until plans pass or max iterations reached, present results.
 
-**Why subagents:** Research and planning burn context fast. Verification uses fresh context. User sees the flow between agents in main context.
+**Why subagents:** Research and planning burn context fast. Verification uses isolated context. User sees the flow between agents in main context.
 </objective>
 
 <context>
@@ -539,8 +539,6 @@ Verification: {Passed | Passed with override | Skipped}
 **Execute Phase {X}** — run all {N} plans
 
 /gsd:execute-phase {X}
-
-<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 

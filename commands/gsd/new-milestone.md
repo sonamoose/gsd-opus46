@@ -690,8 +690,6 @@ Present completion with next steps:
 
 `/gsd:discuss-phase [N]` — gather context and clarify approach
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**

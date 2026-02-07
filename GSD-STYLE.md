@@ -234,10 +234,9 @@ Present: Factual statements, verification results, direct answers
 ### Size Constraints
 
 - **Plans:** 2-3 tasks maximum
-- **Quality curve:** 0-30% peak, 30-50% good, 50-70% degrading, 70%+ poor
 - **Split triggers:** >3 tasks, multiple subsystems, >5 files per task
 
-### Fresh Context Pattern
+### Subagent Isolation Pattern
 
 Use subagents for autonomous work. Reserve main context for user interaction.
 
@@ -338,8 +337,6 @@ Orchestrators @-reference ui-brand.md for stage banners, checkpoint boxes, statu
 **{identifier}: {name}** — {one-line description}
 
 `{copy-paste command}`
-
-<sub>`/clear` first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 

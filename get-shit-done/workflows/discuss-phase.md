@@ -378,8 +378,6 @@ Created: .planning/phases/${PADDED_PHASE}-${SLUG}/${PADDED_PHASE}-CONTEXT.md
 
 `/gsd:plan-phase ${PHASE}`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**

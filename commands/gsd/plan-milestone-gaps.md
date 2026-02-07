@@ -190,8 +190,6 @@ git commit -m "docs(roadmap): add gap closure phases {N}-{M}"
 
 `/gsd:plan-phase {N}`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**

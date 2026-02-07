@@ -155,7 +155,7 @@ Note todo reference in phase planning notes. Keep in pending. Return to list or 
 
 **Create a phase:**
 Display: `/gsd:add-phase [description from todo]`
-Keep in pending. User runs command in fresh context.
+Keep in pending. User runs command separately.
 
 **Brainstorm approach:**
 Keep in pending. Start discussion about problem and approaches.

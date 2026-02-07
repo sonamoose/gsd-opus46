@@ -164,8 +164,6 @@ Read its `<objective>` section.
 
 `/gsd:execute-phase {phase}`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 ```
 
@@ -187,8 +185,6 @@ Check if `{phase}-CONTEXT.md` exists in phase directory.
 
 `/gsd:plan-phase {phase-number}`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 ```
 
@@ -202,8 +198,6 @@ Check if `{phase}-CONTEXT.md` exists in phase directory.
 **Phase {N}: {Name}** — {Goal from ROADMAP.md}
 
 `/gsd:discuss-phase {phase}` — gather context and clarify approach
-
-<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -228,8 +222,6 @@ UAT.md exists with gaps (diagnosed issues). User needs to plan fixes.
 **{phase}-UAT.md** has {N} gaps requiring fixes.
 
 `/gsd:plan-phase {phase} --gaps`
-
-<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -276,8 +268,6 @@ Read ROADMAP.md to get the next phase's name and goal.
 
 `/gsd:discuss-phase {Z+1}` — gather context and clarify approach
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**
@@ -303,8 +293,6 @@ All {N} phases finished!
 **Complete Milestone** — archive and prepare for next
 
 `/gsd:complete-milestone`
-
-<sub>`/clear` first → fresh context window</sub>
 
 ---
 
@@ -334,8 +322,6 @@ Ready to plan the next milestone.
 **Start Next Milestone** — questioning → research → requirements → roadmap
 
 `/gsd:new-milestone`
-
-<sub>`/clear` first → fresh context window</sub>
 
 ---
 ```

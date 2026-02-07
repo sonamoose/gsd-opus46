@@ -580,8 +580,6 @@ Present gaps and offer next command:
 
 `/gsd:plan-phase {X} --gaps`
 
-<sub>`/clear` first → fresh context window</sub>
-
 ---
 
 **Also available:**
@@ -637,8 +635,6 @@ Present next steps based on milestone status:
 **Phase {X+1}: {Name}** — {Goal}
 
 `/gsd:plan-phase {X+1}`
-
-<sub>`/clear` first for fresh context</sub>
 ```
 
 **If milestone complete:**

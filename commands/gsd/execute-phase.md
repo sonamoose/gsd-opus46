@@ -168,8 +168,6 @@ Goal verified ✓
 
 /gsd:discuss-phase {Z+1} — gather context and clarify approach
 
-<sub>/clear first → fresh context window</sub>
-
 ───────────────────────────────────────────────────────────────
 
 **Also available:**
@@ -198,8 +196,6 @@ All phase goals verified ✓
 **Audit milestone** — verify requirements, cross-phase integration, E2E flows
 
 /gsd:audit-milestone
-
-<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 
@@ -233,8 +229,6 @@ Report: .planning/phases/{phase_dir}/{phase}-VERIFICATION.md
 **Plan gap closure** — create additional plans to complete the phase
 
 /gsd:plan-phase {Z} --gaps
-
-<sub>/clear first → fresh context window</sub>
 
 ───────────────────────────────────────────────────────────────
 

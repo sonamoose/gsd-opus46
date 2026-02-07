@@ -4,7 +4,7 @@
 
 **A light-weight and powerful meta-prompting, context engineering and spec-driven development system for Claude Code, OpenCode, and Gemini CLI.**
 
-**Solves context rot — the quality degradation that happens as Claude fills its context window.**
+**Spec-driven development with atomic commits, goal-backward verification, and structured project state.**
 
 [![npm version](https://img.shields.io/npm/v/get-shit-done-cc?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/get-shit-done-cc)
 [![npm downloads](https://img.shields.io/npm/dm/get-shit-done-cc?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/get-shit-done-cc)
@@ -237,7 +237,7 @@ The system:
 2. **Plans** — Creates 2-3 atomic task plans with XML structure
 3. **Verifies** — Checks plans against requirements, loops until they pass
 
-Each plan is small enough to execute in a fresh context window. No degradation, no "I'll be more concise now."
+Each plan is small enough to execute atomically. No degradation, no "I'll be more concise now."
 
 **Creates:** `{phase}-RESEARCH.md`, `{phase}-{N}-PLAN.md`
 
@@ -252,7 +252,7 @@ Each plan is small enough to execute in a fresh context window. No degradation, 
 The system:
 
 1. **Runs plans in waves** — Parallel where possible, sequential when dependent
-2. **Fresh context per plan** — 200k tokens purely for implementation, zero accumulated garbage
+2. **Isolated context per plan** — Subagent gets dedicated context for implementation, zero accumulated garbage
 3. **Commits per task** — Every task gets its own atomic commit
 4. **Verifies against goals** — Checks the codebase delivers what the phase promised
 
@@ -386,7 +386,7 @@ Every stage uses the same pattern: a thin orchestrator spawns specialized agents
 
 The orchestrator never does heavy lifting. It spawns agents, waits, integrates results.
 
-**The result:** You can run an entire phase — deep research, multiple plans created and verified, thousands of lines of code written across parallel executors, automated verification against goals — and your main context window stays at 30-40%. The work happens in fresh subagent contexts. Your session stays fast and responsive.
+**The result:** You can run an entire phase — deep research, multiple plans created and verified, thousands of lines of code written across parallel executors, automated verification against goals — while the orchestrator stays lean. The work happens in isolated subagent contexts. Your session stays fast and responsive.
 
 ### Atomic Git Commits
 

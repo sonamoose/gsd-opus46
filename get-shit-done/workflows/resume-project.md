@@ -218,8 +218,6 @@ Based on user selection, route to appropriate workflow:
 
   `/gsd:execute-phase {phase}`
 
-  <sub>`/clear` first → fresh context window</sub>
-
   ---
   ```
 - **Plan phase** → Show command for user to run after clearing:
@@ -231,8 +229,6 @@ Based on user selection, route to appropriate workflow:
   **Phase [N]: [Name]** — [Goal from ROADMAP.md]
 
   `/gsd:plan-phase [phase-number]`
-
-  <sub>`/clear` first → fresh context window</sub>
 
   ---
 
