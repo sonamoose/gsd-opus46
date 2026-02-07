@@ -160,7 +160,7 @@ If you prefer not to use that flag, add this to your project's `.claude/settings
 
 ## How It Works
 
-> **Already have code?** Run `/gsd:map-codebase` first. It spawns parallel agents to analyze your stack, architecture, conventions, and concerns. Then `/gsd:new-project` knows your codebase — questions focus on what you're adding, and planning automatically loads your patterns.
+> **Already have code?** Just run `/gsd:new-project`. It auto-detects existing code (39 extensions, 30 languages) and routes to the brownfield pipeline: 4-way analysis → health dashboard → purpose selection (Fix/Improve/Refactor) → tailored roadmap. No manual mode selection needed.
 
 ### 1. Initialize Project
 
@@ -425,9 +425,12 @@ You're never locked in. The system adapts.
 
 ### Brownfield
 
+`/gsd:new-project`은 기존 코드베이스를 자동 감지합니다. 코드가 있으면 분석 파이프라인이 실행되고, 없으면 기존 그린필드 흐름으로 진행됩니다.
+
 | Command | What it does |
 |---------|--------------|
-| `/gsd:map-codebase` | Analyze existing codebase before new-project |
+| `/gsd:new-project` | Auto-detects brownfield/greenfield and routes to optimal flow |
+| `/gsd:map-codebase` | Analyze existing codebase (standalone, or auto-triggered by new-project) |
 
 ### Phase Management
 

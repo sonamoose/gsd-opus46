@@ -6,6 +6,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+- **Brownfield Mode** — `/gsd:new-project`이 기존 코드베이스를 자동 감지하고 최적 워크플로우로 분기
+  - 5-signal 감지 (코드 파일, 패키지 매니저, Git 히스토리, 디렉토리 구조, 코드베이스 맵)
+  - 39개 확장자, 30개 언어 지원 (Vue, Svelte, Astro, Erlang, Elm 포함)
+  - 4방면 자동 분석 (구조/아키텍처, 기술 스택, 문제점/기술부채, 테스트 상태)
+  - 10줄 이내 health/dimension/concerns 대시보드
+  - 목적별 라우팅 (Fix/Improve/Refactor) + 맞춤 질문 흐름
+  - 목적별 로드맵 자동 생성 (severity/dependency/impact-effort 순)
+  - 문제점-디버그 브릿징 (gsd-debugger 호환 형식 자동 프리필)
+- **에이전트:** `gsd-brownfield-analyzer` — 코드베이스 분석 전문 에이전트
+- **워크플로우:** `brownfield-flow.md` — 분석→목적 라우팅→로드맵 생성 파이프라인
+- **레퍼런스:** `brownfield-detection.md`, `brownfield-questioning.md`
+- **템플릿:** `brownfield-summary.md`, `brownfield-roadmap.md`
+
+### Fixed
+- 감지 스크립트 silent failure 3건 수정 (확장자 누락, 오분류 sanity check, 에이전트 실패 처리)
+- `gsd-verifier`에 브라운필드 컨텍스트 인식 추가
+- `brownfield-detection.md` 문서 최신화 (미래형→과거형)
+
 ## [1.0-opus46] - 2026-02-07
 
 Opus 4.6 네이티브 기능 호환 리팩토링. GSD 고유 가치는 보존하면서
