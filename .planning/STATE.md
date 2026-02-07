@@ -8,16 +8,16 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Status
 **Milestone:** v1.0 — Brownfield Mode
 **Phase:** 4 — Command Integration (new-project.md 수정)
-**Status:** Planned (2 plans, 2 waves — ready for execution)
+**Status:** In progress (1 of 2 plans executed)
 
 ## Current Position
 
 Phase: 4 of 5 (Command Integration)
-Plan: 0 of 2 executed
-Status: Planning complete, awaiting execution
-Last activity: 2026-02-08 - Phase 4 planned (04-01, 04-02)
+Plan: 1 of 2 executed
+Status: 04-01 complete (detection + routing), 04-02 pending
+Last activity: 2026-02-08 - Plan 04-01 executed (detection upgrade + MODE routing)
 
-Progress: ██████░░░░ 60%
+Progress: ███████░░░ 70%
 
 ## Progress
 | Phase | Name | Status | Plans | Progress |
@@ -25,7 +25,7 @@ Progress: ██████░░░░ 60%
 | 1 | Foundation | ✓ | 3/3 | 100% |
 | 2 | Analysis Pipeline | ✓ | 2/2 | 100% |
 | 3 | Purpose Routing | ✓ | 3/3 | 100% |
-| 4 | Command Integration | ◐ | 0/2 planned | 0% |
+| 4 | Command Integration | ◐ | 1/2 executed | 50% |
 | 5 | State Integration + Polish | ○ | 0/? | 0% |
 
 ## Decisions
@@ -79,8 +79,9 @@ Progress: ██████░░░░ 60%
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Phase 4 planning complete (2 plans created, checker passed)
-Resume file: None
+Stopped at: Phase 4 plan 04-01 executed (detection + MODE routing in new-project.md)
+Resume file: .planning/phases/04-command-integration/04-01-SUMMARY.md
+Next: Execute plan 04-02 (brownfield pipeline + convergence guards + dynamic banner)
 
 ## Notes
 - 빌드 순서는 ARCHITECTURE.md 연구의 의존성 그래프에 따름
@@ -89,4 +90,4 @@ Resume file: None
 
 ---
 *State initialized: 2026-02-08*
-*Last updated: 2026-02-08 after Phase 4 planning complete (2 plans, checker PASS WITH WARNINGS)*
+*Last updated: 2026-02-08 after Phase 4 plan 04-01 executed (detection upgrade + MODE-based routing)*
