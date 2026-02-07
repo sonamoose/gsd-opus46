@@ -95,6 +95,12 @@ Plans:
 ### Phase 5: State Integration + Polish (상태 관리 + 컨텍스트 전파)
 **Goal:** 브라운필드 분석 컨텍스트가 PROJECT.md와 STATE.md를 통해 다운스트림 에이전트(planner, executor)에 전달되도록 상태 관리를 완성한다.
 **Requirements:** STATE-01, STATE-02
+**Plans:** 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — project.md/state.md 템플릿에 Codebase Context 섹션 추가 + 브라운필드 가이던스 확장
+- [ ] 05-02-PLAN.md — 브라운필드 컨텍스트 전파 체인 종단간 검증
+
 **Artifacts:**
 - `get-shit-done/templates/project.md` (MINOR UPDATE)
 - `get-shit-done/templates/state.md` (MINOR UPDATE)
