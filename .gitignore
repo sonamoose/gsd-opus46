@@ -5,8 +5,11 @@ CLAUDE.md
 /research.claude/
 commands.html
 
-# Local test installs
-.claude/
+# Local test installs (hooks, skills, settings는 추적)
+.claude/*
+!.claude/hooks/
+!.claude/skills/
+!.claude/settings.json
 
 # Build artifacts (committed to npm, not git)
 hooks/dist/
