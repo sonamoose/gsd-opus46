@@ -80,7 +80,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — 감지 로직 업그레이드 (Phase 1 Step 3) + MODE 기반 3분기 라우팅 (Phase 2)
-- [ ] 04-02-PLAN.md — 브라운필드 파이프라인 (Phase 2B) + 수렴 가드 (Phases 6-8) + 동적 완료 배너 (Phase 10)
+- [x] 04-02-PLAN.md — 브라운필드 파이프라인 (Phase 2B) + 수렴 가드 (Phases 6-8) + 동적 완료 배너 (Phase 10)
 
 **Artifacts:**
 - `commands/gsd/new-project.md` (MODIFIED)

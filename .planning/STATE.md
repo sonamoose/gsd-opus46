@@ -3,21 +3,21 @@
 ## Project Reference
 See: .planning/PROJECT.md (updated 2026-02-08)
 **Core value:** 코드 존재 여부에 따라 자동으로 최적의 워크플로우 제공
-**Current focus:** Phase 4
+**Current focus:** Phase 5
 
 ## Current Status
 **Milestone:** v1.0 — Brownfield Mode
-**Phase:** 4 — Command Integration (new-project.md 수정)
-**Status:** In progress (1 of 2 plans executed)
+**Phase:** 4 — Command Integration (new-project.md 수정) COMPLETE
+**Status:** All plans executed (2/2)
 
 ## Current Position
 
-Phase: 4 of 5 (Command Integration)
-Plan: 1 of 2 executed
-Status: 04-01 complete (detection + routing), 04-02 pending
-Last activity: 2026-02-08 - Plan 04-01 executed (detection upgrade + MODE routing)
+Phase: 4 of 5 (Command Integration) COMPLETE
+Plan: 2 of 2 executed
+Status: 04-01 complete (detection + routing), 04-02 complete (brownfield pipeline + guards + banner)
+Last activity: 2026-02-08 - Plan 04-02 executed (brownfield pipeline + convergence guards + dynamic banner)
 
-Progress: ███████░░░ 70%
+Progress: ████████░░ 80%
 
 ## Progress
 | Phase | Name | Status | Plans | Progress |
@@ -25,7 +25,7 @@ Progress: ███████░░░ 70%
 | 1 | Foundation | ✓ | 3/3 | 100% |
 | 2 | Analysis Pipeline | ✓ | 2/2 | 100% |
 | 3 | Purpose Routing | ✓ | 3/3 | 100% |
-| 4 | Command Integration | ◐ | 1/2 executed | 50% |
+| 4 | Command Integration | ✓ | 2/2 | 100% |
 | 5 | State Integration + Polish | ○ | 0/? | 0% |
 
 ## Decisions
@@ -79,9 +79,9 @@ Progress: ███████░░░ 70%
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Phase 4 plan 04-01 executed (detection + MODE routing in new-project.md)
-Resume file: .planning/phases/04-command-integration/04-01-SUMMARY.md
-Next: Execute plan 04-02 (brownfield pipeline + convergence guards + dynamic banner)
+Stopped at: Phase 4 complete (all 2 plans executed)
+Resume file: .planning/phases/04-command-integration/04-02-SUMMARY.md
+Next: Phase 5 — State Integration + Polish
 
 ## Notes
 - 빌드 순서는 ARCHITECTURE.md 연구의 의존성 그래프에 따름
@@ -90,4 +90,4 @@ Next: Execute plan 04-02 (brownfield pipeline + convergence guards + dynamic ban
 
 ---
 *State initialized: 2026-02-08*
-*Last updated: 2026-02-08 after Phase 4 plan 04-01 executed (detection upgrade + MODE-based routing)*
+*Last updated: 2026-02-08 after Phase 4 complete (04-02: brownfield pipeline + convergence guards + dynamic banner)*
