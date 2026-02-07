@@ -78,20 +78,9 @@ PLAN.md IS the prompt. It contains:
 
 When planning a phase, you are writing the prompt that will execute it.
 
-## Quality Degradation Curve
+## Aggressive Atomicity
 
-Claude degrades when it perceives context pressure and enters "completion mode."
-
-| Context Usage | Quality | Claude's State |
-|---------------|---------|----------------|
-| 0-30% | PEAK | Thorough, comprehensive |
-| 30-50% | GOOD | Confident, solid work |
-| 50-70% | DEGRADING | Efficiency mode begins |
-| 70%+ | POOR | Rushed, minimal |
-
-**The rule:** Stop BEFORE quality degrades. Plans should complete within ~50% context.
-
-**Aggressive atomicity:** More plans, smaller scope, consistent quality. Each plan: 2-3 tasks max.
+More plans, smaller scope, consistent quality. Each plan: 2-3 tasks max.
 
 ## Ship Fast
 
@@ -343,23 +332,15 @@ If file appears in multiple plans: Later plan depends on earlier (by plan number
 
 <scope_estimation>
 
-## Context Budget Rules
+## Plan Sizing Rules
 
-**Plans should complete within ~50% of context usage.**
+**Each plan: 2-3 tasks maximum.**
 
-Why 50% not 80%?
-- No context anxiety possible
-- Quality maintained start to finish
-- Room for unexpected complexity
-- If you target 80%, you've already spent 40% in degradation mode
-
-**Each plan: 2-3 tasks maximum. Stay under 50% context.**
-
-| Task Complexity | Tasks/Plan | Context/Task | Total |
-|-----------------|------------|--------------|-------|
-| Simple (CRUD, config) | 3 | ~10-15% | ~30-45% |
-| Complex (auth, payments) | 2 | ~20-30% | ~40-50% |
-| Very complex (migrations, refactors) | 1-2 | ~30-40% | ~30-50% |
+| Task Complexity | Tasks/Plan |
+|-----------------|------------|
+| Simple (CRUD, config) | 3 |
+| Complex (auth, payments) | 2 |
+| Very complex (migrations, refactors) | 1-2 |
 
 ## Split Signals
 
@@ -393,20 +374,13 @@ Depth controls compression tolerance, not artificial inflation.
 
 Don't pad small work to hit a number. Don't compress complex work to look efficient.
 
-## Estimating Context Per Task
+## Estimating Task Size
 
-| Files Modified | Context Impact |
-|----------------|----------------|
-| 0-3 files | ~10-15% (small) |
-| 4-6 files | ~20-30% (medium) |
-| 7+ files | ~40%+ (large - split) |
-
-| Complexity | Context/Task |
-|------------|--------------|
-| Simple CRUD | ~15% |
-| Business logic | ~25% |
-| Complex algorithms | ~40% |
-| Domain modeling | ~35% |
+| Files Modified | Size |
+|----------------|------|
+| 0-3 files | Small |
+| 4-6 files | Medium |
+| 7+ files | Large — split |
 
 </scope_estimation>
 
@@ -818,11 +792,11 @@ Output: [Working, tested feature]
 
 **Result:** Each TDD plan produces 2-3 atomic commits.
 
-## Context Budget for TDD
+## TDD Plan Sizing
 
-TDD plans target ~40% context (lower than standard plans' ~50%).
+TDD plans should be smaller than standard plans (1-2 tasks max).
 
-Why lower:
+Why smaller:
 - RED phase: write test, run test, potentially debug why it didn't fail
 - GREEN phase: implement, run test, potentially iterate
 - REFACTOR phase: modify code, run tests, verify no regressions
@@ -1191,7 +1165,7 @@ Rules:
 1. Same-wave tasks with no file conflicts -> can be in parallel plans
 2. Tasks with shared files -> must be in same plan or sequential plans
 3. Checkpoint tasks -> mark plan as `autonomous: false`
-4. Each plan: 2-3 tasks max, single concern, ~50% context target
+4. Each plan: 2-3 tasks max, single concern
 </step>
 
 <step name="derive_must_haves">
@@ -1205,9 +1179,9 @@ Apply goal-backward methodology to derive must_haves for PLAN.md frontmatter.
 </step>
 
 <step name="estimate_scope">
-After grouping, verify each plan fits context budget.
+After grouping, verify each plan stays within size limits.
 
-2-3 tasks, ~50% context target. Split if necessary.
+2-3 tasks per plan. Split if necessary.
 
 Check depth setting and calibrate accordingly.
 </step>
@@ -1395,7 +1369,7 @@ Phase planning complete when:
 - [ ] Each plan: depends_on, files_modified, autonomous, must_haves in frontmatter
 - [ ] Each plan: user_setup declared if external services involved
 - [ ] Each plan: Objective, context, tasks, verification, success criteria, output
-- [ ] Each plan: 2-3 tasks (~50% context)
+- [ ] Each plan: 2-3 tasks
 - [ ] Each task: Type, Files (if auto), Action, Verify, Done
 - [ ] Checkpoints properly structured
 - [ ] Wave structure maximizes parallelism

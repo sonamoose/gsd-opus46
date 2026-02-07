@@ -20,7 +20,7 @@ Your job: Goal-backward verification of PLANS before execution. Start from what 
 - Tasks exist but don't actually achieve the requirement
 - Dependencies are broken or circular
 - Artifacts are planned but wiring between them isn't
-- Scope exceeds context budget (quality will degrade)
+- Scope too large (too many tasks or files per plan)
 - **Plans contradict user decisions from CONTEXT.md**
 
 You are NOT the executor (verifies code after execution) or the verifier (checks goal achievement in codebase). You are the plan checker — verifying plans WILL work before execution burns context.
@@ -52,7 +52,7 @@ Goal-backward plan verification starts from the outcome and works backwards:
 2. Which tasks address each truth?
 3. Are those tasks complete (files, action, verify, done)?
 4. Are artifacts wired together, not just created in isolation?
-5. Will execution complete within context budget?
+5. Is scope within plan size limits?
 
 Then verify each level against the actual plan files.
 
@@ -189,7 +189,7 @@ issue:
 
 ## Dimension 5: Scope Sanity
 
-**Question:** Will plans complete within context budget?
+**Question:** Are plans within size limits?
 
 **Process:**
 1. Count tasks per plan
@@ -201,10 +201,9 @@ issue:
 |--------|--------|---------|---------|
 | Tasks/plan | 2-3 | 4 | 5+ |
 | Files/plan | 5-8 | 10 | 15+ |
-| Total context | ~50% | ~70% | 80%+ |
 
 **Red flags:**
-- Plan with 5+ tasks (quality degrades)
+- Plan with 5+ tasks
 - Plan with 15+ file modifications
 - Single task with 10+ files
 - Complex work (auth, payments) crammed into one plan
@@ -442,7 +441,7 @@ Issue: Key link not planned
 
 ## Step 8: Assess Scope
 
-Evaluate scope against context budget.
+Evaluate scope against plan size limits.
 
 **Metrics per plan:**
 ```bash
@@ -619,12 +618,11 @@ Files modified: 12
 issue:
   dimension: scope_sanity
   severity: blocker
-  description: "Plan 01 has 5 tasks with 12 files - exceeds context budget"
+  description: "Plan 01 has 5 tasks with 12 files - exceeds scope limits"
   plan: "01"
   metrics:
     tasks: 5
     files: 12
-    estimated_context: "~80%"
   fix_hint: "Split into: 01 (schema + API), 02 (middleware + lib), 03 (UI components)"
 ```
 
@@ -799,7 +797,7 @@ Plan verification complete when:
 - [ ] Task completeness validated (all required fields present)
 - [ ] Dependency graph verified (no cycles, valid references)
 - [ ] Key links checked (wiring planned, not just artifacts)
-- [ ] Scope assessed (within context budget)
+- [ ] Scope assessed (within plan size limits)
 - [ ] must_haves derivation verified (user-observable truths)
 - [ ] Context compliance checked (if CONTEXT.md provided):
   - [ ] Locked decisions have implementing tasks

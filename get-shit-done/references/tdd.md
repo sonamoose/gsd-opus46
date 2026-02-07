@@ -247,17 +247,15 @@ Both follow same format: `{type}({phase}-{plan}): {description}`
 - Consistent with overall commit strategy
 </commit_pattern>
 
-<context_budget>
-## Context Budget
+<tdd_sizing>
+## TDD Plan Sizing
 
-TDD plans target **~40% context usage** (lower than standard plans' ~50%).
+TDD plans should be smaller than standard plans (1-2 tasks max, single feature focus).
 
-Why lower:
+Why smaller:
 - RED phase: write test, run test, potentially debug why it didn't fail
 - GREEN phase: implement, run test, potentially iterate on failures
 - REFACTOR phase: modify code, run tests, verify no regressions
 
 Each phase involves reading files, running commands, analyzing output. The back-and-forth is inherently heavier than linear task execution.
-
-Single feature focus ensures full quality throughout the cycle.
-</context_budget>
+</tdd_sizing>

@@ -157,7 +157,7 @@ Task(
 - Create a SINGLE plan with 1-3 focused tasks
 - Quick tasks should be atomic and self-contained
 - No research phase, no checker phase
-- Target ~30% context usage (simple, focused)
+- Keep scope small and focused
 </constraints>
 
 <output>

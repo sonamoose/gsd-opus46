@@ -169,7 +169,7 @@ grep -n "type=\"checkpoint" .planning/phases/XX-name/{phase}-{plan}-PLAN.md
 
 - **Fully autonomous plan** - spawn single subagent for entire plan
 - Subagent gets fresh 200k context, executes all tasks, creates SUMMARY, commits
-- Main context: Just orchestration (~5% usage)
+- Main context: Just orchestration (minimal usage)
 
 **If checkpoints found, parse into segments:**
 
@@ -528,7 +528,7 @@ Committing...
 
 ````
 
-**Benefit:** Each subagent starts fresh (~20-30% context), enabling larger plans without quality degradation.
+**Benefit:** Each subagent starts with isolated context, enabling larger plans without quality degradation.
 </step>
 
 <step name="load_prompt">
@@ -959,7 +959,7 @@ After TDD plan completion, ensure:
 - Test coverage for the new behavior exists
 - No unrelated tests broken
 
-**Why TDD uses dedicated plans:** TDD requires 2-3 execution cycles (RED → GREEN → REFACTOR), each with file reads, test runs, and potential debugging. This consumes 40-50% of context for a single feature. Dedicated plans ensure full quality throughout the cycle.
+**Why TDD uses dedicated plans:** TDD requires 2-3 execution cycles (RED → GREEN → REFACTOR), each with file reads, test runs, and potential debugging. The back-and-forth is heavier than linear execution. Dedicated plans ensure full quality throughout the cycle.
 
 **Comparison:**
 - Standard plans: Multiple tasks, 1 commit per task, 2-4 commits total

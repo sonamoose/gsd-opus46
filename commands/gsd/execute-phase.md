@@ -19,7 +19,7 @@ Execute all plans in a phase using wave-based parallel execution.
 
 Orchestrator stays lean: discover plans, analyze dependencies, group into waves, spawn subagents, collect results. Each subagent loads the full execute-plan context and handles its own plan.
 
-Context budget: ~15% orchestrator, 100% fresh per subagent.
+Orchestrator stays minimal; each subagent gets isolated context.
 </objective>
 
 <execution_context>

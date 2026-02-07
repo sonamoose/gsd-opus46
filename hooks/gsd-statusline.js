@@ -31,15 +31,13 @@ process.stdin.on('end', () => {
       const filled = Math.floor(used / 10);
       const bar = '█'.repeat(filled) + '░'.repeat(10 - filled);
 
-      // Color based on scaled usage (thresholds adjusted for new scale)
-      if (used < 63) {        // ~50% real
+      // Color: green (safe) → yellow (compact recommended) → red (compact auto-triggered)
+      if (used < 80) {
         ctx = ` \x1b[32m${bar} ${used}%\x1b[0m`;
-      } else if (used < 81) { // ~65% real
-        ctx = ` \x1b[33m${bar} ${used}%\x1b[0m`;
-      } else if (used < 95) { // ~76% real
-        ctx = ` \x1b[38;5;208m${bar} ${used}%\x1b[0m`;
+      } else if (used < 95) {
+        ctx = ` \x1b[33m${bar} ${used}% ⟡ /compact\x1b[0m`;
       } else {
-        ctx = ` \x1b[5;31m💀 ${bar} ${used}%\x1b[0m`;
+        ctx = ` \x1b[31m${bar} ${used}% ⚠ compacting\x1b[0m`;
       }
     }
 
