@@ -196,9 +196,97 @@ Existing codebase detected: {CODE_FILE_COUNT} files, {PRIMARY_LANG}, {GIT_COMMIT
 ```
 Continue to Phase 2B (Brownfield Pipeline).
 
-<!-- Phase 2B: Brownfield Pipeline -- see below -->
+## Phase 2B: Brownfield Pipeline
+
+**This phase runs ONLY when MODE == "brownfield".**
+
+### Step 1: Map Codebase
+
+Check if codebase is already mapped:
+- If HAS_CODEBASE_MAP == "yes": Display "Using existing codebase map." Skip mapping.
+- If HAS_CODEBASE_MAP == "no":
+
+Display banner:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► MAPPING CODEBASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Execute the map-codebase workflow inline by following:
+@~/.claude/get-shit-done/workflows/map-codebase.md
+
+The workflow spawns 4 parallel mapper agents. Wait for completion. Verify 7 documents exist in .planning/codebase/.
+
+If map-codebase workflow offers "Refresh/Update/Skip" (because .planning/codebase/ already exists), choose "Skip" to use existing map.
+
+### Step 2: Run Brownfield Analysis + Purpose Routing
+
+Display banner:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► ANALYZING CODEBASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Execute the brownfield-flow workflow inline by following:
+@~/.claude/get-shit-done/workflows/brownfield-flow.md
+
+The workflow runs with `purpose_routing: true` (default). It executes Steps 1-9:
+- Steps 1-5: Analysis pipeline (prerequisites, scope, analysis via Task(), dashboard, result)
+- Steps 6-9: Purpose routing (purpose selection, questioning, debug bridge, roadmap generation)
+
+CRITICAL: brownfield-flow uses AskUserQuestion for interactive steps (Steps 6-7). It MUST execute inline within this command context. Do NOT spawn it as Task().
+
+After brownfield-flow completes, these artifacts exist:
+- .planning/brownfield-analysis.md (analysis summary)
+- .planning/ROADMAP.md (purpose-aware roadmap)
+- .planning/STATE.md (with purpose recorded)
+- .planning/REQUIREMENTS.md (with item-to-phase mapping)
+
+### Step 3: Write PROJECT.md (Brownfield)
+
+Read .planning/codebase/ARCHITECTURE.md and STACK.md. Infer Validated requirements from existing code capabilities.
+
+Use the brownfield PROJECT.md writing logic from Phase 4 below (the "For brownfield projects (codebase map exists):" section). Read ARCHITECTURE.md and STACK.md, identify what the codebase already does, and write these as Validated requirements.
+
+Also incorporate the brownfield analysis context:
+- Add "Codebase Mode: brownfield" and "Primary Language: {PRIMARY_LANG}" to the Context section
+- Reference .planning/brownfield-analysis.md in the Context section
+
+Write .planning/PROJECT.md using the template from `templates/project.md`.
+
+**Commit PROJECT.md:**
+
+```bash
+mkdir -p .planning
+git add .planning/PROJECT.md
+git commit -m "$(cat <<'EOF'
+docs: initialize brownfield project
+
+[One-liner from analysis health + purpose]
+EOF
+)"
+```
+
+### Step 4: Continue to Phase 5
+
+```
+Brownfield pipeline complete. Continuing to workflow preferences...
+```
+
+Skip directly to Phase 5 (Workflow Preferences). Do NOT execute:
+- Phase 3 (Deep Questioning) -- brownfield-flow handled questioning
+- Phase 4 (Write PROJECT.md) -- handled in Step 3 above
+- Phase 6 (Research Decision) -- brownfield analysis serves as domain research
+- Phase 7 (Define Requirements) -- brownfield-flow produced REQUIREMENTS.md
+- Phase 8 (Create Roadmap) -- brownfield-flow produced ROADMAP.md
+
+**If MODE == "brownfield": Phase 2B has already been executed. Skip to Phase 5 (Workflow Preferences).**
 
 ## Phase 3: Deep Questioning
+
+**If MODE == "brownfield": Phase 2B has already been executed. Skip to Phase 5 (Workflow Preferences).**
 
 **Display stage banner:**
 
