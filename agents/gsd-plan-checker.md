@@ -1,3 +1,4 @@
+<!-- Recommended Effort: high — multi-dimensional plan verification with coverage and wiring analysis -->
 ---
 name: gsd-plan-checker
 description: Verifies plans will achieve phase goal before execution. Goal-backward analysis of plan quality. Spawned by /gsd:plan-phase orchestrator.

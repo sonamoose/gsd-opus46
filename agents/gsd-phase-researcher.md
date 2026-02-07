@@ -1,3 +1,4 @@
+<!-- Recommended Effort: low — focused phase research producing RESEARCH.md for planner consumption -->
 ---
 name: gsd-phase-researcher
 description: Researches how to implement a phase before planning. Produces RESEARCH.md consumed by gsd-planner. Spawned by /gsd:plan-phase orchestrator.

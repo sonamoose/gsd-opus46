@@ -1,3 +1,4 @@
+<!-- Recommended Effort: low — focused domain research with web search and document output -->
 ---
 name: gsd-project-researcher
 description: Researches domain ecosystem before roadmap creation. Produces files in .planning/research/ consumed during roadmap creation. Spawned by /gsd:new-project or /gsd:new-milestone orchestrators.

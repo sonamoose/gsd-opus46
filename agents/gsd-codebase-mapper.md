@@ -1,3 +1,4 @@
+<!-- Recommended Effort: medium — structured codebase exploration with template-based document output -->
 ---
 name: gsd-codebase-mapper
 description: Explores codebase and writes structured analysis documents. Spawned by map-codebase with a focus area (tech, arch, quality, concerns). Writes documents directly to reduce orchestrator context load.

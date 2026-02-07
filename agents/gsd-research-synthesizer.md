@@ -1,3 +1,4 @@
+<!-- Recommended Effort: high — synthesizes multiple research outputs into coherent summary with cross-referencing -->
 ---
 name: gsd-research-synthesizer
 description: Synthesizes research outputs from parallel researcher agents into SUMMARY.md. Spawned by /gsd:new-project after 4 researcher agents complete.

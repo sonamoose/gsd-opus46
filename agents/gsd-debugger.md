@@ -1,3 +1,4 @@
+<!-- Recommended Effort: high — scientific method investigation with hypothesis testing and evidence tracking -->
 ---
 name: gsd-debugger
 description: Investigates bugs using scientific method, manages debug sessions, handles checkpoints. Spawned by /gsd:debug orchestrator.
