@@ -65,33 +65,40 @@
 
 ## Traceability
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| DETECT-01 | Phase 1 | Pending |
-| DETECT-02 | Phase 1 | Pending |
-| DETECT-03 | Phase 1 | Pending |
-| DETECT-04 | Phase 1 | Pending |
-| ANALYSIS-01 | Phase 2 | Pending |
-| ANALYSIS-02 | Phase 2 | Pending |
-| ANALYSIS-03 | Phase 2 | Pending |
-| ANALYSIS-04 | Phase 2 | Pending |
-| ROUTE-01 | Phase 3 | Pending |
-| ROUTE-02 | Phase 3 | Pending |
-| ROUTE-03 | Phase 3 | Pending |
-| ROUTE-04 | Phase 3 | Pending |
-| STATE-01 | Phase 4 | Pending |
-| STATE-02 | Phase 4 | Pending |
-| STATE-03 | Phase 4 | Pending |
-| INFRA-01 | Phase 2 | Pending |
-| INFRA-02 | Phase 3 | Pending |
-| INFRA-03 | Phase 2 | Pending |
-| INFRA-04 | Phase 5 | Pending |
+| Requirement | Phase | Phase Name | Status |
+|-------------|-------|------------|--------|
+| DETECT-01 | Phase 1 | Foundation | Pending |
+| DETECT-02 | Phase 1 | Foundation | Pending |
+| DETECT-03 | Phase 1 | Foundation | Pending |
+| DETECT-04 | Phase 1 | Foundation | Pending |
+| INFRA-01 | Phase 1 | Foundation | Pending |
+| INFRA-03 | Phase 1 | Foundation | Pending |
+| ANALYSIS-01 | Phase 2 | Analysis Pipeline | Pending |
+| ANALYSIS-02 | Phase 2 | Analysis Pipeline | Pending |
+| ANALYSIS-03 | Phase 2 | Analysis Pipeline | Pending |
+| ANALYSIS-04 | Phase 2 | Analysis Pipeline | Pending |
+| INFRA-02 | Phase 2 | Analysis Pipeline | Pending |
+| ROUTE-01 | Phase 3 | Purpose Routing | Pending |
+| ROUTE-02 | Phase 3 | Purpose Routing | Pending |
+| ROUTE-03 | Phase 3 | Purpose Routing | Pending |
+| ROUTE-04 | Phase 3 | Purpose Routing | Pending |
+| INFRA-04 | Phase 4 | Command Integration | Pending |
+| STATE-03 | Phase 4 | Command Integration | Pending |
+| STATE-01 | Phase 5 | State Integration | Pending |
+| STATE-02 | Phase 5 | State Integration | Pending |
 
 **Coverage:**
 - v1 requirements: 19 total
 - Mapped to phases: 19
 - Unmapped: 0 ✓
 
+**Phase summary:**
+- Phase 1 (Foundation): 6 requirements — DETECT-01~04, INFRA-01, INFRA-03
+- Phase 2 (Analysis Pipeline): 5 requirements — ANALYSIS-01~04, INFRA-02
+- Phase 3 (Purpose Routing): 4 requirements — ROUTE-01~04
+- Phase 4 (Command Integration): 2 requirements — INFRA-04, STATE-03
+- Phase 5 (State Integration): 2 requirements — STATE-01, STATE-02
+
 ---
 *Requirements defined: 2026-02-08*
-*Last updated: 2026-02-08 after initial definition*
+*Last updated: 2026-02-08 after roadmap phase mapping*
