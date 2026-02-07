@@ -6,6 +6,36 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0-opus46] - 2026-02-07
+
+Opus 4.6 네이티브 기능 호환 리팩토링. GSD 고유 가치는 보존하면서
+Compaction, Agent Teams, Adaptive Thinking으로 중복 코드를 경량화.
+
+### Added
+- **Commands:** `/gsd:team-review`, `/gsd:effort-report`, `/gsd:compact-state` 3종 추가
+- **Skills:** `gsd-analyzer` (프로젝트 진행 분석), `opus46-advisor` (Opus 4.6 기능 추천)
+- **Hooks:** SessionStart 훅으로 STATE.md + CODEMAP.md 자동 컨텍스트 로딩
+- **CodeMap:** `.planning/codebase/CODEMAP.md` — 프로젝트 구조·역할·의존관계 시각화
+- **Agent Teams 분기:** execute-phase, map-codebase에 `AGENT_TEAMS` 환경변수 조건부 병렬 실행
+- **Effort Level:** 11개 에이전트에 Recommended Effort Level 주석 추가
+- **Effort Level Profiles:** `references/model-profiles.md`를 effort level 기반으로 전환
+
+### Removed
+- `/clear` 강제 패턴 (Compaction API로 대체)
+- 컨텍스트 비율 규칙 ("30-40% 이하 유지")
+- Task() 호출의 `model=` 파라미터 (12개 파일)
+- `resolve_model_profile` 보일러플레이트 (effort level 참조로 교체)
+
+### Changed
+- Statusline: 4단계(63/81/95%) → 3단계(80/95% + Compaction 안내)로 단순화
+- config.json: `agent_teams` 설정 필드 추가
+- 기존 Task() 패턴은 기본 동작으로 유지 (하위 호환)
+
+### Verified
+- Agent Teams 3명 병렬 검증 (Structure / Function / Principles) — 전체 PASS
+- GSD 고유 가치 (파일 기반 상태, 워크플로우 규율, atomic commit, UAT) 보존 확인
+- Opus 4.6 수정은 모두 선택적 (opt-in) 적용
+
 ## [1.11.2] - 2026-02-05
 
 ### Added
