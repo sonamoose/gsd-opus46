@@ -67,7 +67,7 @@ CODE_FILES=$(find . \
   | grep -v '/dist/' | grep -v '/build/' | grep -v '/.next/' \
   | grep -v __pycache__ | grep -v '/target/' | grep -v _generated \
   | grep -v '/.turbo/' | grep -v '/coverage/' | grep -v '/.cache/')
-CODE_FILE_COUNT=$(echo "$CODE_FILES" | grep -c . 2>/dev/null || echo "0")
+CODE_FILE_COUNT=$(echo "$CODE_FILES" | grep . 2>/dev/null | wc -l | tr -d ' ')
 ```
 
 ### Signal 2: Package Manager
@@ -197,7 +197,7 @@ detect_primary_language() {
     local ext="$1"
     local lang="$2"
     local count
-    count=$(echo "$CODE_FILES" | grep -c "\\.${ext}$" 2>/dev/null || echo "0")
+    count=$(echo "$CODE_FILES" | grep "\\.${ext}$" 2>/dev/null | wc -l | tr -d ' ')
     if [ "$count" -gt "$max_count" ]; then
       max_count=$count
       max_lang=$lang
@@ -249,7 +249,7 @@ detect_primary_language() {
 PRIMARY_LANG=$(detect_primary_language)
 ```
 
-**Note:** For languages with multiple extensions (e.g., TypeScript = `.ts` + `.tsx`), counts are accumulated by the `count_ext` function since it uses `>` comparison (not `>=`). The first extension to set `max_count` keeps priority if counts are equal, but the accumulation approach means the combined count of `.ts` + `.tsx` files correctly represents TypeScript when both are present. The function processes related extensions sequentially so that the second call (`tsx`) may override if its count alone exceeds the previous max. For most real projects, the dominant language has a clear majority.
+**Note:** For languages with multiple extensions (e.g., TypeScript = `.ts` + `.tsx`), the `count_ext` function uses `>` comparison. The first extension to set `max_count` keeps priority if counts are equal. The function processes related extensions sequentially so that the second call (`tsx`) may override if its count alone exceeds the previous max. For most real projects, the dominant language has a clear majority.
 
 </language_detection>
 
@@ -331,7 +331,7 @@ CODE_FILES=$(find . \
   | grep -v '/dist/' | grep -v '/build/' | grep -v '/.next/' \
   | grep -v __pycache__ | grep -v '/target/' | grep -v _generated \
   | grep -v '/.turbo/' | grep -v '/coverage/' | grep -v '/.cache/')
-CODE_FILE_COUNT=$(echo "$CODE_FILES" | grep -c . 2>/dev/null || echo "0")
+CODE_FILE_COUNT=$(echo "$CODE_FILES" | grep . 2>/dev/null | wc -l | tr -d ' ')
 
 # --- Signal 2: Package Manager ---
 HAS_PACKAGE=$(ls package.json requirements.txt Cargo.toml go.mod \
@@ -364,7 +364,7 @@ detect_primary_language() {
     local ext="$1"
     local lang="$2"
     local count
-    count=$(echo "$CODE_FILES" | grep -c "\\.${ext}$" 2>/dev/null || echo "0")
+    count=$(echo "$CODE_FILES" | grep "\\.${ext}$" 2>/dev/null | wc -l | tr -d ' ')
     if [ "$count" -gt "$max_count" ]; then
       max_count=$count
       max_lang=$lang
