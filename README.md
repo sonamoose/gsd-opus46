@@ -1,21 +1,18 @@
 <div align="center">
 
-# GET SHIT DONE
+# GSD-Opus46
 
-**A light-weight and powerful meta-prompting, context engineering and spec-driven development system for Claude Code, OpenCode, and Gemini CLI.**
+**GSD (Get Shit Done) refactored for Opus 4.6 — Claude Code 전용.**
 
 **Spec-driven development with atomic commits, goal-backward verification, and structured project state.**
 
-[![npm version](https://img.shields.io/npm/v/get-shit-done-cc?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/get-shit-done-cc)
-[![npm downloads](https://img.shields.io/npm/dm/get-shit-done-cc?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/get-shit-done-cc)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/5JJgD5svVS)
-[![GitHub stars](https://img.shields.io/github/stars/glittercowboy/get-shit-done?style=for-the-badge&logo=github&color=181717)](https://github.com/glittercowboy/get-shit-done)
+[![GitHub stars](https://img.shields.io/github/stars/sonamoose/gsd-opus46?style=for-the-badge&logo=github&color=181717)](https://github.com/sonamoose/gsd-opus46)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 
 <br>
 
 ```bash
-npx get-shit-done-cc
+git clone https://github.com/sonamoose/gsd-opus46.git
 ```
 
 **Works on Mac, Windows, and Linux.**
@@ -36,7 +33,7 @@ npx get-shit-done-cc
 
 **Trusted by engineers at Amazon, Google, Shopify, and Webflow.**
 
-[Why I Built This](#why-i-built-this) · [How It Works](#how-it-works) · [Commands](#commands) · [Why It Works](#why-it-works)
+[What Changed](#what-changed-in-opus-46) · [How It Works](#how-it-works) · [Commands](#commands) · [Why It Works](#why-it-works)
 
 </div>
 
@@ -58,6 +55,29 @@ That's what this is. No enterprise roleplay bullshit. Just an incredibly effecti
 
 ---
 
+## What Changed in Opus 4.6
+
+이 포크는 Opus 4.6의 네이티브 기능을 활용하여 GSD를 경량화하고 보강했습니다.
+
+**제거/경량화 (Opus 4.6이 해결):**
+- Context Rot 강제 대응 코드 (`/clear` 강제, 컨텍스트 비율 관리) → Compaction API로 대체
+- 수동 사고 깊이 지정 → Adaptive Thinking (`/model` effort 슬라이더)로 대체
+- Model Profiles (quality/balanced/budget) → effort level (low/medium/high)로 대체
+
+**추가 (Opus 4.6 활용):**
+- **Agent Teams 호환** — execute-phase, map-codebase에서 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` 시 병렬 실행
+- **SessionStart 훅** — 세션 시작 시 STATE.md + CODEMAP.md 자동 로딩
+- **Skills 2종** — `gsd-analyzer` (프로젝트 분석), `opus46-advisor` (기능 추천)
+- **커맨드 3종** — `/gsd:team-review`, `/gsd:effort-report`, `/gsd:compact-state`
+- **CODEMAP.md** — 프로젝트 구조 지도 (`.planning/codebase/CODEMAP.md`)
+
+**유지 (GSD 고유 가치):**
+- `.planning/` 파일 기반 상태 관리 (PROJECT, ROADMAP, STATE)
+- discuss → plan → execute → verify 강제 워크플로우
+- Atomic commit 규칙, UAT 검증 체계
+
+---
+
 Vibecoding has a bad reputation. You describe what you want, AI generates code, and you get inconsistent garbage that falls apart at scale.
 
 GSD fixes that. It's the context engineering layer that makes Claude Code reliable. Describe your idea, let the system extract everything it needs to know, and let Claude Code get to work.
@@ -73,60 +93,24 @@ People who want to describe what they want and have it built correctly — witho
 ## Getting Started
 
 ```bash
-npx get-shit-done-cc
+git clone https://github.com/sonamoose/gsd-opus46.git
+cd gsd-opus46
+git checkout opus46-refactor
+node bin/install.js --claude --global
 ```
 
-The installer prompts you to choose:
-1. **Runtime** — Claude Code, OpenCode, Gemini, or all
-2. **Location** — Global (all projects) or local (current project only)
+이후 Opus 4.6 확장(Skills, SessionStart 훅)을 추가 설치합니다.
+상세 절차는 [INSTALL.md](INSTALL.md)를 참조하세요.
 
-Verify with `/gsd:help` inside your chosen runtime.
+Verify with `/gsd:help` inside Claude Code.
 
 ### Staying Updated
 
-GSD evolves fast. Update periodically:
-
 ```bash
-npx get-shit-done-cc@latest
+cd gsd-opus46
+git pull origin opus46-refactor
+node bin/install.js --claude --global
 ```
-
-<details>
-<summary><strong>Non-interactive Install (Docker, CI, Scripts)</strong></summary>
-
-```bash
-# Claude Code
-npx get-shit-done-cc --claude --global   # Install to ~/.claude/
-npx get-shit-done-cc --claude --local    # Install to ./.claude/
-
-# OpenCode (open source, free models)
-npx get-shit-done-cc --opencode --global # Install to ~/.config/opencode/
-
-# Gemini CLI
-npx get-shit-done-cc --gemini --global   # Install to ~/.gemini/
-
-# All runtimes
-npx get-shit-done-cc --all --global      # Install to all directories
-```
-
-Use `--global` (`-g`) or `--local` (`-l`) to skip the location prompt.
-Use `--claude`, `--opencode`, `--gemini`, or `--all` to skip the runtime prompt.
-
-</details>
-
-<details>
-<summary><strong>Development Installation</strong></summary>
-
-Clone the repository and run the installer locally:
-
-```bash
-git clone https://github.com/glittercowboy/get-shit-done.git
-cd get-shit-done
-node bin/install.js --claude --local
-```
-
-Installs to `./.claude/` for testing modifications before contributing.
-
-</details>
 
 ### Recommended: Skip Permissions Mode
 
@@ -381,7 +365,7 @@ Every stage uses the same pattern: a thin orchestrator spawns specialized agents
 |-------|------------------|-----------|
 | Research | Coordinates, presents findings | 4 parallel researchers investigate stack, features, architecture, pitfalls |
 | Planning | Validates, manages iteration | Planner creates plans, checker verifies, loop until pass |
-| Execution | Groups into waves, tracks progress | Executors implement in parallel, each with fresh 200k context |
+| Execution | Groups into waves, tracks progress | Executors implement in parallel, each with dedicated context (Opus 4.6: 1M tokens) |
 | Verification | Presents results, routes next | Verifier checks codebase against goals, debuggers diagnose failures |
 
 The orchestrator never does heavy lifting. It spawns agents, waits, integrates results.
@@ -462,6 +446,14 @@ You're never locked in. The system adapts.
 | `/gsd:pause-work` | Create handoff when stopping mid-phase |
 | `/gsd:resume-work` | Restore from last session |
 
+### Opus 4.6
+
+| Command | What it does |
+|---------|--------------|
+| `/gsd:team-review` | Agent Teams를 활용한 병렬 코드 리뷰 (보안/성능/가독성) |
+| `/gsd:effort-report` | 에이전트별 effort level 사용 현황과 권장 수준 대조 보고 |
+| `/gsd:compact-state` | .planning/ 상태 요약 및 STATE.md 갱신으로 컴팩션 대비 |
+
 ### Utilities
 
 | Command | What it does |
@@ -488,22 +480,23 @@ GSD stores project settings in `.planning/config.json`. Configure during `/gsd:n
 | `mode` | `yolo`, `interactive` | `interactive` | Auto-approve vs confirm at each step |
 | `depth` | `quick`, `standard`, `comprehensive` | `standard` | Planning thoroughness (phases × plans) |
 
-### Model Profiles
+### Effort Levels (Opus 4.6)
 
-Control which Claude model each agent uses. Balance quality vs token spend.
+Opus 4.6의 Adaptive Thinking을 활용하여 에이전트별 사고 깊이를 자동 조절합니다.
+기존 Model Profiles(quality/balanced/budget)를 대체합니다.
 
-| Profile | Planning | Execution | Verification |
-|---------|----------|-----------|--------------|
-| `quality` | Opus | Opus | Sonnet |
-| `balanced` (default) | Opus | Sonnet | Sonnet |
-| `budget` | Sonnet | Sonnet | Haiku |
+| GSD 단계 | 권장 Effort | 이유 |
+|----------|-------------|------|
+| discuss-phase | high | 깊은 분석과 질문 생성 |
+| plan-phase | high | 복잡한 계획 수립 |
+| execute-phase | medium | 구현 집중 |
+| verify-work | medium | 검증은 중간 수준으로 충분 |
+| debug | high | 원인 추적에 심층 사고 필요 |
 
-Switch profiles:
+현재 effort 확인 및 조절:
 ```
-/gsd:set-profile budget
+/gsd:set-effort
 ```
-
-Or configure via `/gsd:settings`.
 
 ### Workflow Agents
 
@@ -584,61 +577,37 @@ This prevents Claude from reading these files entirely, regardless of what comma
 
 **Commands not working as expected?**
 - Run `/gsd:help` to verify installation
-- Re-run `npx get-shit-done-cc` to reinstall
+- 재설치: `cd gsd-opus46 && node bin/install.js --claude --global`
 
-**Updating to the latest version?**
-```bash
-npx get-shit-done-cc@latest
-```
-
-**Using Docker or containerized environments?**
-
-If file reads fail with tilde paths (`~/.claude/...`), set `CLAUDE_CONFIG_DIR` before installing:
-```bash
-CLAUDE_CONFIG_DIR=/home/youruser/.claude npx get-shit-done-cc --global
-```
-This ensures absolute paths are used instead of `~` which may not expand correctly in containers.
+**SessionStart 훅이 동작하지 않는 경우**
+- Python 3 설치 확인: `python3 --version`
+- 훅 파일 확인: `ls ~/.claude/hooks/gsd-context-loader.py`
+- settings.json 확인: `cat ~/.claude/settings.json | grep context-loader`
 
 ### Uninstalling
 
-To remove GSD completely:
+기본 GSD 제거:
 
 ```bash
-# Global installs
-npx get-shit-done-cc --claude --global --uninstall
-npx get-shit-done-cc --opencode --global --uninstall
-
-# Local installs (current project)
-npx get-shit-done-cc --claude --local --uninstall
-npx get-shit-done-cc --opencode --local --uninstall
+node bin/install.js --claude --global --uninstall
 ```
 
-This removes all GSD commands, agents, hooks, and settings while preserving your other configurations.
+Opus 4.6 확장 수동 제거:
+
+```bash
+rm ~/.claude/hooks/gsd-context-loader.py
+rm -rf ~/.claude/skills/gsd-analyzer ~/.claude/skills/opus46-advisor
+```
+
+settings.json에서 `gsd-context-loader` 항목을 수동으로 제거합니다.
 
 ---
 
-## Community Ports
+## Original Project
 
-OpenCode and Gemini CLI are now natively supported via `npx get-shit-done-cc`.
+This is a fork of [GSD (Get Shit Done)](https://github.com/glittercowboy/get-shit-done) by TÂCHES, refactored for Opus 4.6 native features.
 
-These community ports pioneered multi-runtime support:
-
-| Project | Platform | Description |
-|---------|----------|-------------|
-| [gsd-opencode](https://github.com/rokicool/gsd-opencode) | OpenCode | Original OpenCode adaptation |
-| gsd-gemini (archived) | Gemini CLI | Original Gemini adaptation by uberfuzzy |
-
----
-
-## Star History
-
-<a href="https://star-history.com/#glittercowboy/get-shit-done&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=glittercowboy/get-shit-done&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=glittercowboy/get-shit-done&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=glittercowboy/get-shit-done&type=Date" />
- </picture>
-</a>
+Original project supports Claude Code, OpenCode, and Gemini CLI via `npx get-shit-done-cc`.
 
 ---
 
