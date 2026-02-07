@@ -1,73 +1,67 @@
-# Model Profiles
+# Effort Level Profiles
 
-Model profiles control which Claude model each GSD agent uses. This allows balancing quality vs token spend.
+Effort level controls Claude's reasoning depth per agent. Set via `/model` slider or `CLAUDE_CODE_EFFORT_LEVEL` environment variable.
 
 ## Profile Definitions
 
-| Agent | `quality` | `balanced` | `budget` |
-|-------|-----------|------------|----------|
-| gsd-planner | opus | opus | sonnet |
-| gsd-roadmapper | opus | sonnet | sonnet |
-| gsd-executor | opus | sonnet | sonnet |
-| gsd-phase-researcher | opus | sonnet | haiku |
-| gsd-project-researcher | opus | sonnet | haiku |
-| gsd-research-synthesizer | sonnet | sonnet | haiku |
-| gsd-debugger | opus | sonnet | sonnet |
-| gsd-codebase-mapper | sonnet | haiku | haiku |
-| gsd-verifier | sonnet | sonnet | haiku |
-| gsd-plan-checker | sonnet | sonnet | haiku |
-| gsd-integration-checker | sonnet | sonnet | haiku |
+| Agent | Recommended Effort | Rationale |
+|-------|-------------------|-----------|
+| gsd-planner | high | Architecture decisions, goal decomposition, task design |
+| gsd-plan-checker | high | Multi-dimensional plan verification, coverage analysis |
+| gsd-debugger | high | Scientific method investigation, hypothesis testing |
+| gsd-research-synthesizer | high | Cross-referencing multiple research outputs |
+| gsd-codebase-mapper | medium | Structured exploration with template output |
+| gsd-roadmapper | medium | Requirement mapping, phase breakdown |
+| gsd-executor | medium | Plan execution with atomic commits |
+| gsd-verifier | medium | Goal-backward codebase verification |
+| gsd-project-researcher | low | Focused domain research, web search |
+| gsd-phase-researcher | low | Phase-specific research producing RESEARCH.md |
+| gsd-integration-checker | low | Checklist-based cross-phase verification |
 
-## Profile Philosophy
+## Level Characteristics
 
-**quality** - Maximum reasoning power
-- Opus for all decision-making agents
-- Sonnet for read-only verification
-- Use when: quota available, critical architecture work
+**high** — Deep reasoning, thorough analysis
+- Complex decision-making and trade-off evaluation
+- Multi-step reasoning chains
+- Suitable for: planning, debugging, synthesis
+- Use when: architecture decisions, critical path work
 
-**balanced** (default) - Smart allocation
-- Opus only for planning (where architecture decisions happen)
-- Sonnet for execution and research (follows explicit instructions)
-- Sonnet for verification (needs reasoning, not just pattern matching)
-- Use when: normal development, good balance of quality and cost
+**medium** — Balanced reasoning, structured execution
+- Follows explicit instructions with good judgment
+- Handles moderate complexity reliably
+- Suitable for: code execution, verification, mapping
+- Use when: normal development, structured tasks
 
-**budget** - Minimal Opus usage
-- Sonnet for anything that writes code
-- Haiku for research and verification
-- Use when: conserving quota, high-volume work, less critical phases
+**low** — Fast, focused, efficient
+- Simple pattern matching and information gathering
+- Template-driven output
+- Suitable for: research, checklist verification
+- Use when: high-volume tasks, information retrieval
 
-## Resolution Logic
+## How to Set Effort Level
 
-Orchestrators resolve model before spawning:
+**Per session:**
+Use `/model` command, then adjust with left/right arrow keys.
 
+**Per environment:**
+```bash
+export CLAUDE_CODE_EFFORT_LEVEL=high  # low | medium | high
 ```
-1. Read .planning/config.json
-2. Get model_profile (default: "balanced")
-3. Look up agent in table above
-4. Pass model parameter to Task call
-```
 
-## Switching Profiles
-
-Runtime: `/gsd:set-profile <profile>`
-
-Per-project default: Set in `.planning/config.json`:
+**Per project (settings.json):**
 ```json
 {
-  "model_profile": "balanced"
+  "effortLevel": "medium"
 }
 ```
 
 ## Design Rationale
 
-**Why Opus for gsd-planner?**
-Planning involves architecture decisions, goal decomposition, and task design. This is where model quality has the highest impact.
+**Why high for gsd-planner?**
+Planning involves architecture decisions, goal decomposition, and task design. Deeper reasoning produces better task breakdown and dependency analysis.
 
-**Why Sonnet for gsd-executor?**
+**Why medium for gsd-executor?**
 Executors follow explicit PLAN.md instructions. The plan already contains the reasoning; execution is implementation.
 
-**Why Sonnet (not Haiku) for verifiers in balanced?**
-Verification requires goal-backward reasoning - checking if code *delivers* what the phase promised, not just pattern matching. Sonnet handles this well; Haiku may miss subtle gaps.
-
-**Why Haiku for gsd-codebase-mapper?**
-Read-only exploration and pattern extraction. No reasoning required, just structured output from file contents.
+**Why low for researchers?**
+Research is primarily information gathering. Speed and breadth matter more than reasoning depth.
