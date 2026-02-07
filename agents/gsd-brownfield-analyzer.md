@@ -94,6 +94,34 @@ Build a mental model of the codebase across all dimensions before writing. Look 
 - Test coverage in TESTING.md correlated with fragile areas in CONCERNS.md
 </step>
 
+<step name="classify_severity">
+Classify each concern extracted from CONCERNS.md (and cross-referenced findings from other documents) into severity levels using these criteria:
+
+**Critical** — Any of:
+- Breaks end-user functionality (users cannot complete a core workflow)
+- Security vulnerability with exploitable vector
+- Data loss or corruption risk
+- Blocks development progress on critical path
+
+**Moderate** — Any of:
+- Degrades user experience noticeably
+- Slows development velocity
+- Performance bottleneck under normal load
+- Accumulating tech debt in core modules (>3 files affected)
+
+**Minor** — Any of:
+- Cosmetic or naming inconsistency
+- Style deviation from established conventions
+- Low-traffic or edge-case performance issue
+- Tech debt in peripheral code (1-2 files affected)
+
+**Sorting within each severity level:**
+1. Primary: Scope of impact — number of files/modules affected (more files = higher rank)
+2. Secondary: Cross-document references — concerns that appear in multiple codebase documents rank higher than single-document findings
+
+Apply these classifications when writing both the Top Concerns section (ranked list) and the Detailed Concerns section (grouped by severity) of the output.
+</step>
+
 <step name="assess_health">
 Determine overall Codebase Health rating based on all documents:
 
@@ -109,7 +137,7 @@ Fill the brownfield-summary template structure. Reference: `get-shit-done/templa
 
 **Executive Summary table:** One row per dimension. Each finding is a clear one-liner with confidence level (HIGH/MEDIUM). Write what a developer needs to know in 10 words or fewer per row.
 
-**Top Concerns:** Extract from CONCERNS.md, ranked by impact. Include severity (critical/moderate/minor). Cross-reference with other documents — if STACK.md shows outdated React and CONCERNS.md flags "legacy UI patterns," merge into one concern.
+**Top Concerns:** Extract from CONCERNS.md, classified using `classify_severity` criteria, ranked within severity by scope of impact. Cross-reference with other documents — if STACK.md shows outdated React and CONCERNS.md flags "legacy UI patterns," merge into one concern.
 
 **7 detailed sections:** For each dimension:
 1. State the source document path
@@ -187,6 +215,8 @@ This confirmation is ~20 lines. The workflow reads it and presents it to the use
 
 **DO NOT COMMIT.** The orchestrator handles git operations.
 
+**CLASSIFY CONCERNS USING EXPLICIT SEVERITY CRITERIA.** Use the criteria defined in the `classify_severity` process step. Do not rely on intuition or vague "importance" — apply the specific conditions (breaks users = critical, degrades experience = moderate, cosmetic = minor). When a concern matches multiple severity levels, use the highest applicable level.
+
 </critical_rules>
 
 <success_criteria>
@@ -201,4 +231,7 @@ This confirmation is ~20 lines. The workflow reads it and presents it to the use
 - [ ] File paths included throughout all sections
 - [ ] Codebase Health rating determined with evidence
 - [ ] Return confirmation is ~20 lines (executive summary only, not full document)
+- [ ] Every concern in Top Concerns has a severity tag matching classify_severity criteria
+- [ ] Detailed Concerns section groups concerns by severity (critical first, then moderate, then minor)
+- [ ] Within each severity group, concerns are sorted by scope of impact (files affected)
 </success_criteria>
