@@ -32,9 +32,15 @@ Plans:
 ### Phase 2: Analysis Pipeline (워크플로우 + 분석 기능)
 **Goal:** 브라운필드 분석 워크플로우를 생성하여 4방면 병렬 분석, 요약 대시보드, 문제점 우선순위 랭킹, 영역 스코프 분석을 구현한다.
 **Requirements:** ANALYSIS-01, ANALYSIS-02, ANALYSIS-03, ANALYSIS-04, INFRA-02
+**Plans:** 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — brownfield-analyzer 에이전트 강화 (심각도 분류 기준 + 영역 스코프 분석 로직)
+- [ ] 02-02-PLAN.md — brownfield-flow.md 분석 파이프라인 워크플로우 생성
+
 **Artifacts:**
 - `get-shit-done/workflows/brownfield-flow.md` (NEW)
-- Analysis pipeline within brownfield-analyzer agent
+- `agents/gsd-brownfield-analyzer.md` (MODIFIED — severity classification + scoped analysis)
 
 **Success Criteria:**
 1. `brownfield-flow.md` 워크플로우가 분석→요약→결정→실행 파이프라인을 오케스트레이션하며, `brownfield-analyzer` 에이전트를 Task()로 스폰한다.
