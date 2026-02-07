@@ -175,30 +175,28 @@ This is the most leveraged moment in any project. Deep questioning here means be
 
    **You MUST run all bash commands above using the Bash tool before proceeding.**
 
-## Phase 2: Brownfield Offer
+## Phase 2: Mode Routing
 
-**If existing code detected and .planning/codebase/ doesn't exist:**
+Check the `MODE` variable from Phase 1 detection:
 
-Check the results from setup step:
-- If `CODE_FILES` is non-empty OR `HAS_PACKAGE` is "yes"
-- AND `HAS_CODEBASE_MAP` is NOT "yes"
+**If MODE == "greenfield":**
+No existing code detected. Continue directly to Phase 3 (Deep Questioning).
 
-Use AskUserQuestion:
-- header: "Existing Code"
-- question: "I detected existing code in this directory. Would you like to map the codebase first?"
-- options:
-  - "Map codebase first" — Run /gsd:map-codebase to understand existing architecture (Recommended)
-  - "Skip mapping" — Proceed with project initialization
-
-**If "Map codebase first":**
+**If MODE == "scaffolded":**
+Display informational message to user:
 ```
-Run `/gsd:map-codebase` first, then return to `/gsd:new-project`
+This appears to be a scaffolded project ({CODE_FILE_COUNT} files, {GIT_COMMIT_COUNT} commits). Treating as a new project.
 ```
-Exit command.
+Continue to Phase 3 (Deep Questioning).
 
-**If "Skip mapping":** Continue to Phase 3.
+**If MODE == "brownfield":**
+Display detection summary to user:
+```
+Existing codebase detected: {CODE_FILE_COUNT} files, {PRIMARY_LANG}, {GIT_COMMIT_COUNT} commits.
+```
+Continue to Phase 2B (Brownfield Pipeline).
 
-**If no existing code detected OR codebase already mapped:** Continue to Phase 3.
+<!-- Phase 2B: Brownfield Pipeline -- see below -->
 
 ## Phase 3: Deep Questioning
 
