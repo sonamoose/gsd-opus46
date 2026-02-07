@@ -76,9 +76,14 @@ Plans:
 ### Phase 4: Command Integration (new-project.md 수정)
 **Goal:** `new-project.md` 커맨드에 브라운필드 분기 로직을 통합하여, 사용자가 `/gsd:new-project`만 실행하면 자동으로 최적 흐름이 적용되게 한다.
 **Requirements:** INFRA-04, STATE-03
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — 감지 로직 업그레이드 (Phase 1 Step 3) + MODE 기반 3분기 라우팅 (Phase 2)
+- [ ] 04-02-PLAN.md — 브라운필드 파이프라인 (Phase 2B) + 수렴 가드 (Phases 6-8) + 동적 완료 배너 (Phase 10)
+
 **Artifacts:**
 - `commands/gsd/new-project.md` (MODIFIED)
-- Greenfield regression test scenarios
 
 **Success Criteria:**
 1. `/gsd:new-project` 실행 시 코드가 존재하면 자동으로 map-codebase 실행 후 brownfield-flow 워크플로우로 위임된다.
