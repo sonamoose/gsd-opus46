@@ -7,24 +7,24 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 
 ## Current Status
 **Milestone:** v1.0 — Brownfield Mode
-**Phase:** 2 — Analysis Pipeline (워크플로우 + 분석 기능)
-**Status:** Complete ✓ (2/2 plans, 13/13 must-haves verified)
+**Phase:** 3 — Purpose Routing (목적 라우팅 + 질문 흐름)
+**Status:** Complete ✓ (3/3 plans, 21/21 must-haves verified)
 
 ## Current Position
 
-Phase: 2 of 5 (Analysis Pipeline)
-Plan: 2 of 2 in current phase
+Phase: 3 of 5 (Purpose Routing)
+Plan: 3 of 3 in current phase
 Status: Phase complete
-Last activity: 2026-02-08 - Completed 02-02-PLAN.md
+Last activity: 2026-02-08 - Completed 03-03-PLAN.md
 
-Progress: █████░░░░░ 50%
+Progress: ██████░░░░ 60%
 
 ## Progress
 | Phase | Name | Status | Plans | Progress |
 |-------|------|--------|-------|----------|
 | 1 | Foundation | ✓ | 3/3 | 100% |
 | 2 | Analysis Pipeline | ✓ | 2/2 | 100% |
-| 3 | Purpose Routing | ○ | 0/? | 0% |
+| 3 | Purpose Routing | ✓ | 3/3 | 100% |
 | 4 | Command Integration | ○ | 0/? | 0% |
 | 5 | State Integration + Polish | ○ | 0/? | 0% |
 
@@ -38,6 +38,10 @@ Progress: █████░░░░░ 50%
 | 02-02 | Workflow reads only agent output, never codebase input docs | Keeps orchestrator lean, follows map-codebase delegation pattern |
 | 02-02 | Scope is caller-provided parameter, not interactive prompt | Keeps workflow non-interactive for Phase 2 analysis-only scope |
 | 02-02 | Analysis-only with explicit Phase 3 extension point | Avoids stub code; Phase 3 extends the same file with purpose routing |
+| 03-01 | Brownfield questioning adapts greenfield "thinking partner" to "diagnostic partner" | Analysis provides observed state; questioning navigates toward action |
+| 03-02 | Three distinct ordering rules: severity, dependency, impact/effort | Each purpose mode produces fundamentally different phase sequences |
+| 03-03 | Purpose routing defaults to true (diverges from research recommendation) | Primary caller (new-project.md) always wants full pipeline; minority case opts out |
+| 03-03 | Debug bridging uses existing gsd-debugger format, not a new format | Reuse > reinvent; debug files are immediately compatible with /gsd:debug |
 
 ## Phase Details
 
@@ -57,8 +61,9 @@ Progress: █████░░░░░ 50%
 ### Phase 3: Purpose Routing
 **Requirements:** ROUTE-01, ROUTE-02, ROUTE-03, ROUTE-04
 **Key artifacts:**
-- Purpose selection + purpose-aware questioning threads
-- Problem-debug bridging + purpose-aware roadmap generation
+- `get-shit-done/references/brownfield-questioning.md` — 목적별 질문 흐름 레퍼런스 (03-01)
+- `get-shit-done/templates/brownfield-roadmap.md` — 목적 인식 로드맵 템플릿 (03-02)
+- `get-shit-done/workflows/brownfield-flow.md` — Steps 6-9 확장 (03-03)
 
 ### Phase 4: Command Integration
 **Requirements:** INFRA-04, STATE-03
@@ -74,7 +79,7 @@ Progress: █████░░░░░ 50%
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 02-02-PLAN.md (Phase 2 complete)
+Stopped at: Completed 03-03-PLAN.md (Phase 3 complete)
 Resume file: None
 
 ## Notes
@@ -84,4 +89,4 @@ Resume file: None
 
 ---
 *State initialized: 2026-02-08*
-*Last updated: 2026-02-08 after 02-02-PLAN.md execution complete (Phase 2 complete)*
+*Last updated: 2026-02-08 after 03-03-PLAN.md execution complete (Phase 3 complete)*

@@ -56,9 +56,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — brownfield-questioning.md 목적별 질문 흐름 레퍼런스 생성
-- [ ] 03-02-PLAN.md — brownfield-roadmap.md 목적 인식 로드맵 템플릿 생성
-- [ ] 03-03-PLAN.md — brownfield-flow.md 확장 (Steps 6-9: 목적 선택, 질문, 디버그 브릿징, 로드맵 생성)
+- [x] 03-01-PLAN.md — brownfield-questioning.md 목적별 질문 흐름 레퍼런스 생성
+- [x] 03-02-PLAN.md — brownfield-roadmap.md 목적 인식 로드맵 템플릿 생성
+- [x] 03-03-PLAN.md — brownfield-flow.md 확장 (Steps 6-9: 목적 선택, 질문, 디버그 브릿징, 로드맵 생성)
 
 **Artifacts:**
 - `get-shit-done/references/brownfield-questioning.md` (NEW)
