@@ -39,7 +39,15 @@ refactored/
 │       ├── codebase/           코드베이스 분석 템플릿 (7개)
 │       └── research-project/   리서치 템플릿 (5개)
 │
-├── hooks/                  ← Claude Code Hooks (2개)
+├── .claude/                ← Claude Code 프로젝트 설정 (Opus 4.6 신규)
+│   ├── settings.json           SessionStart 훅 등록
+│   ├── hooks/
+│   │   └── gsd-context-loader.py  STATE.md + CODEMAP.md 자동 로딩
+│   └── skills/
+│       ├── gsd-analyzer/SKILL.md      .planning/ 진행 상황 분석
+│       └── opus46-advisor/SKILL.md    Opus 4.6 기능 추천
+│
+├── hooks/                  ← GSD 기본 Hooks (2개)
 │   ├── gsd-statusline.js       상태바 표시
 │   └── gsd-check-update.js     버전 확인
 │
@@ -60,6 +68,7 @@ refactored/
 | **Agents** | Task()로 스폰되는 격리 작업자. 입력 → 출력 변환에 집중 | effort level별 권장 수준 보유 |
 | **References** | 에이전트·워크플로우가 참조하는 규칙 문서 | git, 검증, TDD 등 |
 | **Templates** | .planning/ 문서의 구조 정의 | 에이전트가 출력 시 참조 |
+| **Skills** | Claude가 자동 또는 수동으로 호출하는 분석 도구 | allowed-tools로 권한 제한 |
 | **Hooks** | 세션 이벤트에 자동 반응 | SessionStart, PreToolUse 등 |
 
 
