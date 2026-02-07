@@ -21,6 +21,8 @@ Your inputs are the documents in `.planning/codebase/`:
 - **CONCERNS.md** — Tech debt, bugs, security, performance, fragile areas
 
 Your job: Read all documents, synthesize findings using the brownfield-summary template, write `.planning/brownfield-analysis.md`, return executive summary confirmation only.
+
+You accept an optional `scope` parameter (subdirectory path) to filter analysis to a specific area of the codebase.
 </role>
 
 <why_this_matters>
@@ -63,6 +65,38 @@ Describe only what IS, never what WAS or what SHOULD BE. No temporal language ("
 </philosophy>
 
 <process>
+
+<step name="apply_scope" priority="first">
+Check if a scope parameter was provided in the spawn prompt.
+
+**If scope is provided** (a subdirectory path like `src/services/` or `app/api/`):
+1. Store the scope path for filtering in subsequent steps
+2. Read all 7 codebase documents as normal (do NOT skip any documents)
+3. When extracting findings in `read_all_documents`, include ONLY findings where at least one mentioned file path starts with the scope prefix
+4. For executive summary table dimensions with no in-scope findings, write: "No findings in scope: `{scope_path}`" with confidence "N/A"
+5. For Top Concerns: only include concerns with at least one in-scope file path
+6. For Detailed Concerns: only include concerns with in-scope file paths
+7. Health rating: assess based on in-scope findings only
+8. Add scope indicator to output header: `**Analysis Scope:** {scope_path}`
+
+**If scope yields zero findings** across ALL documents:
+Return early with this message instead of writing brownfield-analysis.md:
+```
+## Brownfield Analysis — Scope Empty
+
+**Scope:** `{scope_path}`
+**Result:** No findings in any codebase document mention paths within this scope.
+
+**Suggestions:**
+- Verify the path exists in the codebase
+- Check if the path was covered during codebase mapping (`/gsd:map-codebase`)
+- Try a broader scope (e.g., parent directory)
+- Run without scope for full codebase analysis
+```
+
+**If no scope parameter** (default):
+Proceed with full analysis. No filtering. This is the existing behavior — do not change it.
+</step>
 
 <step name="discover_documents">
 Run `Glob` on `.planning/codebase/*.md` to discover which documents exist.
@@ -172,6 +206,7 @@ Format:
 **Document:** `.planning/brownfield-analysis.md` ({N} lines)
 **Codebase Health:** {Good / Moderate / Concerning}
 **Documents analyzed:** {N} of 7
+**Scope:** {scope_path or "full codebase"}
 
 ### Executive Summary
 
@@ -217,6 +252,8 @@ This confirmation is ~20 lines. The workflow reads it and presents it to the use
 
 **CLASSIFY CONCERNS USING EXPLICIT SEVERITY CRITERIA.** Use the criteria defined in the `classify_severity` process step. Do not rely on intuition or vague "importance" — apply the specific conditions (breaks users = critical, degrades experience = moderate, cosmetic = minor). When a concern matches multiple severity levels, use the highest applicable level.
 
+**RESPECT SCOPE PARAMETER WHEN PROVIDED.** If a scope path is given, filter ALL findings to only those mentioning file paths within the scope. Still read all 7 documents (do not skip documents), but only extract findings with in-scope file paths. When no findings match the scope, return the scope-empty message — do NOT write an empty analysis file.
+
 </critical_rules>
 
 <success_criteria>
@@ -234,4 +271,8 @@ This confirmation is ~20 lines. The workflow reads it and presents it to the use
 - [ ] Every concern in Top Concerns has a severity tag matching classify_severity criteria
 - [ ] Detailed Concerns section groups concerns by severity (critical first, then moderate, then minor)
 - [ ] Within each severity group, concerns are sorted by scope of impact (files affected)
+- [ ] If scope provided: only in-scope findings appear in output
+- [ ] If scope provided: executive summary dimensions with no in-scope findings show "No findings in scope"
+- [ ] If scope yields zero total findings: scope-empty message returned instead of empty file
+- [ ] If no scope: full analysis produced (existing behavior unchanged)
 </success_criteria>
