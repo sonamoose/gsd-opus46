@@ -53,11 +53,17 @@ Plans:
 ### Phase 3: Purpose Routing (목적 라우팅 + 질문 흐름)
 **Goal:** 분석 결과를 기반으로 사용자 목적(버그 수정/기능 개선/리팩토링)을 확인하고, 목적별 맞춤 질문 흐름과 로드맵 자동 생성을 구현한다.
 **Requirements:** ROUTE-01, ROUTE-02, ROUTE-03, ROUTE-04
+**Plans:** 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — brownfield-questioning.md 목적별 질문 흐름 레퍼런스 생성
+- [ ] 03-02-PLAN.md — brownfield-roadmap.md 목적 인식 로드맵 템플릿 생성
+- [ ] 03-03-PLAN.md — brownfield-flow.md 확장 (Steps 6-9: 목적 선택, 질문, 디버그 브릿징, 로드맵 생성)
+
 **Artifacts:**
-- Purpose selection logic in brownfield-flow.md
-- Purpose-aware questioning threads
-- Problem-debug session bridging
-- Purpose-aware roadmap generation logic
+- `get-shit-done/references/brownfield-questioning.md` (NEW)
+- `get-shit-done/templates/brownfield-roadmap.md` (NEW)
+- `get-shit-done/workflows/brownfield-flow.md` (MODIFIED — Steps 6-9 추가)
 
 **Success Criteria:**
 1. 분석 요약 제시 후 사용자가 '버그 수정', '기능 개선', '리팩토링', '기타' 중 목적을 선택할 수 있다.
