@@ -10,6 +10,8 @@
     "commit_docs": true,
     "search_gitignored": false
   },
+  "agent_teams": false,
+  "_agent_teams_comment": "Enable experimental Agent Teams for parallel execution (requires Opus 4.6)",
   "parallelization": {
     "enabled": true,
     "plan_level": true,
