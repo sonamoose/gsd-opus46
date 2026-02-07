@@ -14,8 +14,8 @@ This workflow does NOT read .planning/codebase/*.md documents. The agent reads t
 **Stateless:**
 This workflow does NOT write STATE.md, PROJECT.md, or any planning file. It only orchestrates the agent and presents results. State updates happen when new-project.md integrates this workflow in Phase 4.
 
-**Analysis only (Phase 2):**
-This workflow performs analysis and returns results. It does NOT ask users questions about purpose (fix/improve/refactor). Purpose routing is Phase 3, which will EXTEND this file with additional steps.
+**Analysis then routing:**
+Steps 1-5 perform analysis and present results. Steps 6-9 handle purpose routing — purpose selection, questioning, debug bridging, and roadmap generation. Purpose routing runs by default; callers can opt out with `purpose_routing: false` for standalone analysis.
 
 **Follow map-codebase pattern:**
 Spawn agent via Task(), agent writes file, agent returns lightweight confirmation, workflow presents results to user.
@@ -139,19 +139,280 @@ Ready for purpose routing (Phase 3).
 
 This lightweight return enables the caller to decide next steps based on health rating and top concerns without re-reading the analysis file.
 
+**Continuation check:**
+If `purpose_routing` parameter is true (or not explicitly set to false):
+  Continue to select_purpose.
+
+If `purpose_routing` is explicitly false:
+  End workflow here. (Backward compatible with standalone analysis invocations.)
+
+Default: When invoked without explicit `purpose_routing` parameter, continue to select_purpose.
+This makes purpose routing the default behavior. Callers that want analysis-only must explicitly pass `purpose_routing: false`.
+
+**Rationale (diverges from 03-RESEARCH.md Pattern 5):** The research recommended defaulting to false (analysis-only) for backward compatibility. However, the primary caller will be `new-project.md` (Phase 4) which always wants the full pipeline. Making purpose routing the default avoids requiring every caller to explicitly opt in. The minority case (standalone analysis) can opt out with `purpose_routing: false`. This design choice prioritizes the common case over the legacy case.
+</step>
+
+<step name="select_purpose">
+Read the analysis health rating and top concerns from the present_dashboard output (already in context from Step 4).
+
+**Determine purpose suggestion based on analysis:**
+- If health is "Concerning" AND analysis has >= 2 critical concerns:
+  Suggest "Fix" — "Your codebase has {N} critical issues. Addressing these first is recommended."
+- If health is "Moderate" AND analysis has >= 3 moderate concerns:
+  Suggest "Improve" — "Several areas could be strengthened. A good time to enhance capabilities."
+- If health is "Good":
+  Suggest "Improve" or "Refactor" — "Codebase is healthy. Good time to add features or clean up."
+- Otherwise:
+  No suggestion — present all options equally.
+
+Use AskUserQuestion:
+  header: "Purpose"
+  question: "{Suggestion context, if any}. What do you want to do with this codebase?"
+  options:
+    - "Fix issues" — Address bugs, security issues, broken functionality
+    - "Add/improve features" — Enhance existing capabilities, add new ones
+    - "Refactor/restructure" — Improve code quality, architecture, patterns
+    - "Something else" — I'll explain my goal
+
+**If "Something else" selected:**
+Ask freeform: "What's your goal?"
+Based on response, either:
+  - Map to the closest mode (fix/improve/refactor) if response clearly fits one
+  - Continue with "other" mode questioning if response is genuinely different
+
+Store the selected purpose (fix | improve | refactor | other).
+
+Continue to purpose_questioning.
+</step>
+
+<step name="purpose_questioning">
+Load questioning reference: @get-shit-done/references/brownfield-questioning.md
+
+Branch based on selected purpose from Step 6:
+
+**If purpose == "fix":**
+Follow the fix_thread from brownfield-questioning.md:
+  1. Present top concerns from analysis as selectable options (AskUserQuestion, multiSelect: true)
+     Include severity tags on each option.
+  2. For each selected concern, ask 1-2 adaptive follow-ups:
+     - Observation: "Have you seen this in practice?" (yes with details / yes can't reproduce / no)
+     - Impact: "How does this affect you?" (blocks users / degrades experience / slows development / minor)
+  3. Confirm priority order with user.
+  4. Ask scope: root cause fix vs quick patch vs mix.
+  5. Decision gate: ready for roadmap?
+
+**If purpose == "improve":**
+Follow the improve_thread from brownfield-questioning.md:
+  1. Ask vision: "What do you want this codebase to do that it doesn't do now?" (freeform)
+  2. Present architecture fit: "Your codebase uses [pattern from analysis]. How does this fit?"
+  3. Cross-reference affected areas with analysis concerns.
+  4. Ask constraints (test coverage, performance, timeline) — skip irrelevant ones.
+  5. Decision gate: ready for roadmap?
+
+**If purpose == "refactor":**
+Follow the refactor_thread from brownfield-questioning.md:
+  1. Present concerns + structural findings as pain point options (AskUserQuestion, multiSelect: true)
+  2. Ask target state per pain area: architecture, conventions, testing.
+  3. Risk tolerance: small/safe vs moderate vs significant.
+  4. Confirm strategy based on risk tolerance.
+  5. Decision gate: ready for roadmap?
+
+**If purpose == "other":**
+Follow the other_thread from brownfield-questioning.md:
+  1. Ask goal (freeform).
+  2. Ask how existing codebase relates to goal.
+  3. Ask which analysis findings are relevant.
+  4. Decision gate: ready for roadmap?
+
+**All modes:** Follow questioning.md philosophy — adaptive, not checklist. Skip questions that are irrelevant based on prior answers. Dive deeper where the user shows energy.
+
+Store questioning output as purpose_context (selected concerns/improvements/refactoring areas + priorities + constraints + target state).
+
+If purpose is "fix" AND user chose "debug the top issue first" at decision gate:
+  Continue to bridge_to_debug.
+Else:
+  Continue to generate_roadmap.
+</step>
+
+<step name="bridge_to_debug">
+**Conditional:** Only runs if purpose is "fix" AND user chose to debug.
+
+If this step was not triggered (purpose is not "fix" or user chose "plan first"):
+  Skip to generate_roadmap.
+
+For the user's highest-priority selected concern:
+
+Use AskUserQuestion:
+  header: "Debug Bridge"
+  question: "Start debugging '[concern title]' now with pre-filled analysis findings?"
+  options:
+    - "Debug now" — Create debug session, then continue to roadmap
+    - "Plan first" — Skip debug, go straight to roadmap
+    - "Debug only" — Create debug session, skip roadmap generation
+
+If "Debug now" or "Debug only":
+  1. Create .planning/debug/ directory:
+     ```bash
+     mkdir -p .planning/debug
+     ```
+
+  2. Generate debug file slug from concern title:
+     Lowercase, replace spaces with hyphens, remove special characters.
+     Example: "N+1 query pattern" -> "n1-query-pattern"
+
+  3. Write .planning/debug/{concern-slug}.md following the existing gsd-debugger debug_file_protocol format:
+
+     ```markdown
+     ---
+     status: investigating
+     trigger: "[Concern title from analysis]"
+     created: [YYYY-MM-DD HH:MM]
+     updated: [YYYY-MM-DD HH:MM]
+     ---
+
+     ## Current Focus
+
+     hypothesis: [Inferred from analysis finding — what is likely causing this]
+     test: [Suggested first verification step based on file paths from analysis]
+     expecting: [Expected behavior based on concern description]
+     next_action: Verify concern in code at [primary file path from analysis]
+
+     ## Symptoms
+
+     expected: [Expected behavior inferred from concern context]
+     actual: [Concern description from analysis — the observed problem]
+     errors: [Error details if available from analysis, else "See analysis finding"]
+     reproduction: [Inferred from file paths and concern description]
+     started: Detected during codebase analysis [analysis date]
+
+     ## Eliminated
+
+     (none yet)
+
+     ## Evidence
+
+     - timestamp: [analysis date]
+       checked: Codebase analysis (brownfield-analysis.md)
+       found: [Full concern description with severity tag]
+       implication: [Impact assessment — why this matters]
+
+     ## Resolution
+
+     root_cause:
+     fix:
+     verification:
+     files_changed: []
+     ```
+
+  4. Present to user:
+     "Debug session created: `.planning/debug/{concern-slug}.md`
+
+     Symptoms pre-filled from codebase analysis.
+     Run `/gsd:debug` to start investigating. The debug command will detect this active session."
+
+If "Debug now": Continue to generate_roadmap.
+If "Debug only": Return result and end workflow.
+If "Plan first": Continue to generate_roadmap.
+</step>
+
+<step name="generate_roadmap">
+Spawn the gsd-roadmapper agent with purpose-aware context to create a brownfield roadmap.
+
+Determine ordering rule from purpose:
+  - fix -> "severity_desc" (critical first)
+  - improve -> "dependency_asc" (foundations first)
+  - refactor -> "impact_effort_ratio_desc" (quick wins first)
+  - other -> "dependency_asc" (default to dependency order)
+
+Use Task tool with:
+  subagent_type: "gsd-roadmapper"
+  description: "Create purpose-aware brownfield roadmap"
+
+Prompt (pass to agent):
+```
+First, read your agent definition for full instructions:
+@agents/gsd-roadmapper.md
+
+<planning_context>
+
+**Project:**
+@.planning/PROJECT.md
+
+**Codebase Analysis:**
+@.planning/brownfield-analysis.md
+
+**Roadmap Template:**
+@get-shit-done/templates/brownfield-roadmap.md
+
+**Purpose:** {fix | improve | refactor | other}
+
+**Purpose Context:**
+{Questioning output from Step 7:
+  - Selected concerns/improvements/refactoring areas with priorities
+  - User-provided constraints, target state, risk tolerance
+  - Analysis findings relevant to the selected items}
+
+**Ordering Rule:** {severity_desc | dependency_asc | impact_effort_ratio_desc}
+
+</planning_context>
+
+<instructions>
+Create a purpose-aware roadmap for this brownfield project:
+1. Read the brownfield-roadmap.md template for structure and ordering rules
+2. Derive phases from the purpose context items (concerns / improvements / refactoring areas)
+3. Order phases by the specified ordering rule
+4. Map each item to exactly one phase
+5. Derive 2-5 success criteria per phase (observable, with file paths from analysis)
+6. Write .planning/ROADMAP.md using the brownfield roadmap template structure
+7. Write .planning/STATE.md with purpose recorded in Decisions
+8. Update .planning/REQUIREMENTS.md with item-to-phase traceability
+9. Return ROADMAP CREATED with summary
+</instructions>
+```
+
+Wait for agent to complete.
+Read and present the roadmap summary to the user.
+
+Return structured result:
+
+```
+## Purpose Routing Complete
+
+**Purpose:** {selected purpose}
+**Ordering:** {ordering rule description}
+**Roadmap:** `.planning/ROADMAP.md`
+**Phases:** {N} phases derived from {M} items
+
+{If debug session created:}
+**Debug session:** `.planning/debug/{concern-slug}.md` — run `/gsd:debug` to investigate
+
+Next: `/gsd:plan-phase 1` to begin executing the roadmap.
+```
+
 End workflow.
 </step>
 
 </process>
 
 <success_criteria>
+Phase 2 (Steps 1-5) — Analysis Pipeline:
 - .planning/codebase/*.md documents verified (prerequisite check)
 - gsd-brownfield-analyzer agent spawned via Task() with optional scope parameter
 - Agent writes .planning/brownfield-analysis.md (workflow does NOT write this file)
 - Executive summary (health + 7-dimension table + top concerns) presented inline to user
-- Inline dashboard is approximately 10 lines of content (table rows + health + concerns header)
 - Structured result returned to caller with health, scope, and top concern
-- Workflow did NOT read .planning/codebase/*.md directly
-- Workflow did NOT write STATE.md or any file besides delegating to agent
-- Workflow did NOT ask user interactive questions (analysis only, no purpose routing)
+
+Phase 3 (Steps 6-9) — Purpose Routing:
+- User selects purpose from 4 options (fix/improve/refactor/other) with analysis-informed suggestion
+- Purpose-specific questioning gathers context using brownfield-questioning.md reference
+- Fix mode: concerns selected, validated, prioritized; debug bridge offered
+- Improve mode: vision captured, architecture fit assessed, constraints gathered
+- Refactor mode: pain points selected, target state defined, risk tolerance set
+- Debug bridging (fix mode): .planning/debug/{slug}.md created in gsd-debugger format with status: investigating
+- Roadmap generation: gsd-roadmapper spawned with purpose-aware context and ordering rule
+- Fix roadmap ordered by severity, improve by dependency, refactor by impact/effort ratio
+
+Backward compatibility:
+- Steps 1-5 unchanged when purpose_routing: false is passed
+- Standalone analysis invocations produce identical output to Phase 2 behavior
 </success_criteria>
