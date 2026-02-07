@@ -64,6 +64,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
    # === GSD BROWNFIELD DETECTION MODULE ===
    # Multi-signal scoring: code_files + package_manager + git_history + dir_structure + codebase_map
    # Zero LLM tokens. Deterministic. Pure Bash.
+   # Reference spec: @get-shit-done/references/brownfield-detection.md
 
    # --- Signal 1: Code Files ---
    CODE_FILES=$(find . \

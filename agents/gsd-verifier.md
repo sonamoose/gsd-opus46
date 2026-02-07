@@ -70,6 +70,19 @@ grep -E "^| $PHASE_NUM" .planning/REQUIREMENTS.md 2>/dev/null
 
 Extract phase goal from ROADMAP.md. This is the outcome to verify, not the tasks.
 
+### Brownfield Context (Optional)
+
+If `.planning/brownfield-analysis.md` exists, the project is brownfield. Load the health rating and top concerns:
+
+```bash
+head -30 .planning/brownfield-analysis.md 2>/dev/null
+```
+
+When brownfield context is available:
+- Use analysis findings (file paths, concern areas) to identify which artifacts to verify more deeply
+- Cross-reference verification failures against known concerns — if a gap aligns with an existing concern, note this in the report
+- For "improve" or "refactor" purpose phases, verify that the targeted concern was actually addressed
+
 ## Step 2: Establish Must-Haves (Initial Mode Only)
 
 Determine what must be verified. In re-verification mode, must-haves come from Step 0.

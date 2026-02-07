@@ -19,7 +19,7 @@ Detect whether a directory contains an existing codebase (brownfield), a freshly
 - Graceful degradation — scaffolded projects downgrade to greenfield workflow
 - Broad language coverage — 20+ file extensions across 6 language families
 
-**Integration point:** This module will be embedded in `commands/gsd/new-project.md` Phase 1-2 in Phase 4 of this project, replacing the current basic detection logic.
+**Integration point:** This module is embedded in `commands/gsd/new-project.md` Phase 1-2, replacing the original basic detection logic. (Integrated in v1.0, Phase 4.)
 
 </overview>
 
@@ -37,12 +37,13 @@ Count non-config, non-generated source files. This is the primary signal for cod
 
 | Family | Extensions |
 |--------|-----------|
-| **Web/Backend** | `.ts`, `.tsx`, `.js`, `.jsx`, `.py`, `.rb`, `.php`, `.go`, `.rs`, `.ex`, `.exs` |
+| **Web/Backend** | `.ts`, `.tsx`, `.js`, `.jsx`, `.vue`, `.svelte`, `.astro`, `.py`, `.rb`, `.php`, `.go`, `.rs`, `.ex`, `.exs` |
 | **Mobile** | `.swift`, `.m`, `.dart`, `.kt` |
 | **Systems** | `.c`, `.cpp`, `.h`, `.hpp`, `.rs`, `.zig` |
 | **JVM** | `.java`, `.kt`, `.kts`, `.scala`, `.clj`, `.cljs`, `.groovy` |
 | **.NET** | `.cs`, `.fs`, `.vb` |
-| **Others** | `.lua`, `.ml`, `.hs`, `.r`, `.jl` |
+| **Functional** | `.erl`, `.elm`, `.hs`, `.ml` |
+| **Others** | `.lua`, `.r`, `.jl` |
 
 **Exclusion directories:** `node_modules`, `.git`, `vendor`, `dist`, `build`, `.next`, `__pycache__`, `target`, `_generated`, `.turbo`, `coverage`, `.cache`
 
@@ -54,6 +55,7 @@ Count non-config, non-generated source files. This is the primary signal for cod
 # Signal 1: Code files (expanded language coverage)
 CODE_FILES=$(find . \
   -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \
+  -o -name "*.vue" -o -name "*.svelte" -o -name "*.astro" \
   -o -name "*.py" -o -name "*.rb" -o -name "*.php" -o -name "*.go" \
   -o -name "*.rs" -o -name "*.ex" -o -name "*.exs" \
   -o -name "*.swift" -o -name "*.m" -o -name "*.dart" -o -name "*.kt" \
@@ -62,6 +64,7 @@ CODE_FILES=$(find . \
   -o -name "*.cljs" -o -name "*.groovy" \
   -o -name "*.cs" -o -name "*.fs" -o -name "*.vb" \
   -o -name "*.lua" -o -name "*.ml" -o -name "*.hs" -o -name "*.r" -o -name "*.jl" \
+  -o -name "*.erl" -o -name "*.elm" \
   2>/dev/null \
   | grep -v node_modules | grep -v '/.git/' | grep -v vendor \
   | grep -v '/dist/' | grep -v '/build/' | grep -v '/.next/' \
@@ -160,6 +163,9 @@ Determines the primary programming language by counting file extensions from the
 |-----------|----------|
 | `ts`, `tsx` | TypeScript |
 | `js`, `jsx` | JavaScript |
+| `vue` | Vue |
+| `svelte` | Svelte |
+| `astro` | Astro |
 | `py` | Python |
 | `go` | Go |
 | `rs` | Rust |
@@ -183,6 +189,8 @@ Determines the primary programming language by counting file extensions from the
 | `hs` | Haskell |
 | `r` | R |
 | `jl` | Julia |
+| `erl` | Erlang |
+| `elm` | Elm |
 
 **Variable:**
 - `PRIMARY_LANG` — language name string (e.g., "TypeScript", "Python")
@@ -207,6 +215,7 @@ detect_primary_language() {
   # Web/Backend
   count_ext "ts" "TypeScript"; count_ext "tsx" "TypeScript"
   count_ext "js" "JavaScript"; count_ext "jsx" "JavaScript"
+  count_ext "vue" "Vue"; count_ext "svelte" "Svelte"; count_ext "astro" "Astro"
   count_ext "py" "Python"
   count_ext "rb" "Ruby"
   count_ext "php" "PHP"
@@ -235,6 +244,9 @@ detect_primary_language() {
   count_ext "cs" "C#"
   count_ext "fs" "F#"
   count_ext "vb" "VB.NET"
+
+  # Functional
+  count_ext "erl" "Erlang"; count_ext "elm" "Elm"
 
   # Others
   count_ext "lua" "Lua"
@@ -307,7 +319,7 @@ fi
 
 ## Complete Bash Script
 
-Full, copy-pasteable detection script. Runs all 5 signal checks, language detection, and mode determination. Outputs 7 diagnostic variables.
+Full, copy-pasteable detection script. Runs all 5 signal checks, language detection, mode determination, and sanity check. Outputs 7 diagnostic variables + optional warning.
 
 ```bash
 #!/usr/bin/env bash
@@ -318,6 +330,7 @@ Full, copy-pasteable detection script. Runs all 5 signal checks, language detect
 # --- Signal 1: Code Files ---
 CODE_FILES=$(find . \
   -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \
+  -o -name "*.vue" -o -name "*.svelte" -o -name "*.astro" \
   -o -name "*.py" -o -name "*.rb" -o -name "*.php" -o -name "*.go" \
   -o -name "*.rs" -o -name "*.ex" -o -name "*.exs" \
   -o -name "*.swift" -o -name "*.m" -o -name "*.dart" -o -name "*.kt" \
@@ -326,6 +339,7 @@ CODE_FILES=$(find . \
   -o -name "*.cljs" -o -name "*.groovy" \
   -o -name "*.cs" -o -name "*.fs" -o -name "*.vb" \
   -o -name "*.lua" -o -name "*.ml" -o -name "*.hs" -o -name "*.r" -o -name "*.jl" \
+  -o -name "*.erl" -o -name "*.elm" \
   2>/dev/null \
   | grep -v node_modules | grep -v '/.git/' | grep -v vendor \
   | grep -v '/dist/' | grep -v '/build/' | grep -v '/.next/' \
@@ -373,6 +387,7 @@ detect_primary_language() {
 
   count_ext "ts" "TypeScript"; count_ext "tsx" "TypeScript"
   count_ext "js" "JavaScript"; count_ext "jsx" "JavaScript"
+  count_ext "vue" "Vue"; count_ext "svelte" "Svelte"; count_ext "astro" "Astro"
   count_ext "py" "Python"
   count_ext "rb" "Ruby"
   count_ext "php" "PHP"
@@ -393,6 +408,7 @@ detect_primary_language() {
   count_ext "cs" "C#"
   count_ext "fs" "F#"
   count_ext "vb" "VB.NET"
+  count_ext "erl" "Erlang"; count_ext "elm" "Elm"
   count_ext "lua" "Lua"
   count_ext "ml" "OCaml"
   count_ext "hs" "Haskell"
@@ -415,6 +431,12 @@ else
   MODE="greenfield"
 fi
 
+# --- Sanity Check ---
+DETECTION_WARNING=""
+if [ "$CODE_FILE_COUNT" -eq 0 ] && { [ "$SRC_DIR_COUNT" -gt 5 ] || [ -n "$HAS_PACKAGE" ] || [ "$GIT_COMMIT_COUNT" -gt 10 ]; }; then
+  DETECTION_WARNING="WARNING: 0 code files detected but project has signals suggesting existing code (dirs=$SRC_DIR_COUNT, package=$HAS_PACKAGE, commits=$GIT_COMMIT_COUNT). The codebase may use file extensions not in the detection list. Consider brownfield mode."
+fi
+
 # --- Diagnostic Output ---
 echo "MODE=$MODE"
 echo "CODE_FILE_COUNT=$CODE_FILE_COUNT"
@@ -423,10 +445,11 @@ echo "HAS_PACKAGE=$HAS_PACKAGE"
 echo "GIT_COMMIT_COUNT=$GIT_COMMIT_COUNT"
 echo "SRC_DIR_COUNT=$SRC_DIR_COUNT"
 echo "HAS_CODEBASE_MAP=$HAS_CODEBASE_MAP"
+[ -n "$DETECTION_WARNING" ] && echo "$DETECTION_WARNING"
 ```
 
 **Script properties:**
-- 55 lines of actual Bash (under 60-line target)
+- ~65 lines of actual Bash (sanity check added)
 - Handles non-git directories gracefully (`|| echo "0"`)
 - No external dependencies — uses only `find`, `grep`, `ls`, `wc`, `git`
 - Deterministic — same directory always produces same result
@@ -437,11 +460,11 @@ echo "HAS_CODEBASE_MAP=$HAS_CODEBASE_MAP"
 
 ## Integration Guide
 
-How this module integrates with `commands/gsd/new-project.md` (to be implemented in Phase 4).
+This module is integrated into `commands/gsd/new-project.md` Phase 1-2. (Completed in v1.0, Phase 4.)
 
-### What It Replaces
+### What It Replaced
 
-**Current Phase 1, Step 3** in `new-project.md`:
+**Previous Phase 1, Step 3** in `new-project.md`:
 ```bash
 # CURRENT: Basic detection (7 extensions, binary check)
 CODE_FILES=$(find . -name "*.ts" -o -name "*.js" -o -name "*.py" -o -name "*.go" -o -name "*.rs" -o -name "*.swift" -o -name "*.java" 2>/dev/null | grep -v node_modules | grep -v .git | head -20)
@@ -449,13 +472,13 @@ HAS_PACKAGE=$([ -f package.json ] || [ -f requirements.txt ] || [ -f Cargo.toml 
 HAS_CODEBASE_MAP=$([ -d .planning/codebase ] && echo "yes")
 ```
 
-**Replaced by:** The complete Bash script from this module (all 5 signals + language detection + mode determination).
+**Replaced by:** The complete Bash script from this module (all 5 signals + language detection + mode determination + sanity check).
 
-### What It Extends
+### What It Extended
 
-**Current Phase 2** (Brownfield Offer) is binary: code detected or not.
+**Previous Phase 2** (Brownfield Offer) was binary: code detected or not.
 
-**New Phase 2** uses MODE-based routing with three paths:
+**Current Phase 2** uses MODE-based routing with three paths:
 
 | MODE | Behavior | User Experience |
 |------|----------|----------------|
@@ -471,12 +494,14 @@ All existing greenfield behavior is preserved:
 - PROJECT.md, config.json, research, requirements, roadmap flows are untouched
 - Only the detection + routing decision changes
 
-### Integration Steps (Phase 4)
+### Integration History
 
-1. Replace `new-project.md` Phase 1 Step 3 Bash block with the complete script
-2. Update Phase 2 to use `MODE` variable instead of checking `CODE_FILES` directly
-3. Add scaffolded mode messaging in Phase 2
-4. Pass `PRIMARY_LANG` to brownfield-flow workflow context when spawning agents
+Completed in v1.0, Phase 4:
+
+1. Replaced `new-project.md` Phase 1 Step 3 Bash block with the complete script
+2. Updated Phase 2 to use `MODE` variable with 3-way routing (greenfield/scaffolded/brownfield)
+3. Added scaffolded mode messaging and DETECTION_WARNING handling in Phase 2
+4. `PRIMARY_LANG` passed to brownfield-flow workflow context when spawning agents
 
 </integration_guide>
 
