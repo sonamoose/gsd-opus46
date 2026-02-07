@@ -3,19 +3,19 @@
 ## Project Reference
 See: .planning/PROJECT.md (updated 2026-02-08)
 **Core value:** 코드 존재 여부에 따라 자동으로 최적의 워크플로우 제공
-**Current focus:** Phase 3
+**Current focus:** Phase 4
 
 ## Current Status
 **Milestone:** v1.0 — Brownfield Mode
-**Phase:** 3 — Purpose Routing (목적 라우팅 + 질문 흐름)
-**Status:** Complete ✓ (3/3 plans, 21/21 must-haves verified)
+**Phase:** 4 — Command Integration (new-project.md 수정)
+**Status:** Planned (2 plans, 2 waves — ready for execution)
 
 ## Current Position
 
-Phase: 3 of 5 (Purpose Routing)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-08 - Completed 03-03-PLAN.md
+Phase: 4 of 5 (Command Integration)
+Plan: 0 of 2 executed
+Status: Planning complete, awaiting execution
+Last activity: 2026-02-08 - Phase 4 planned (04-01, 04-02)
 
 Progress: ██████░░░░ 60%
 
@@ -25,7 +25,7 @@ Progress: ██████░░░░ 60%
 | 1 | Foundation | ✓ | 3/3 | 100% |
 | 2 | Analysis Pipeline | ✓ | 2/2 | 100% |
 | 3 | Purpose Routing | ✓ | 3/3 | 100% |
-| 4 | Command Integration | ○ | 0/? | 0% |
+| 4 | Command Integration | ◐ | 0/2 planned | 0% |
 | 5 | State Integration + Polish | ○ | 0/? | 0% |
 
 ## Decisions
@@ -79,7 +79,7 @@ Progress: ██████░░░░ 60%
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 03-03-PLAN.md (Phase 3 complete)
+Stopped at: Phase 4 planning complete (2 plans created, checker passed)
 Resume file: None
 
 ## Notes
@@ -89,4 +89,4 @@ Resume file: None
 
 ---
 *State initialized: 2026-02-08*
-*Last updated: 2026-02-08 after 03-03-PLAN.md execution complete (Phase 3 complete)*
+*Last updated: 2026-02-08 after Phase 4 planning complete (2 plans, checker PASS WITH WARNINGS)*
