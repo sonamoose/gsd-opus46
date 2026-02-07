@@ -59,9 +59,118 @@ This is the most leveraged moment in any project. Deep questioning here means be
 
 3. **Detect existing code (brownfield detection):**
    ```bash
-   CODE_FILES=$(find . -name "*.ts" -o -name "*.js" -o -name "*.py" -o -name "*.go" -o -name "*.rs" -o -name "*.swift" -o -name "*.java" 2>/dev/null | grep -v node_modules | grep -v .git | head -20)
-   HAS_PACKAGE=$([ -f package.json ] || [ -f requirements.txt ] || [ -f Cargo.toml ] || [ -f go.mod ] || [ -f Package.swift ] && echo "yes")
-   HAS_CODEBASE_MAP=$([ -d .planning/codebase ] && echo "yes")
+   # === GSD BROWNFIELD DETECTION MODULE ===
+   # Multi-signal scoring: code_files + package_manager + git_history + dir_structure + codebase_map
+   # Zero LLM tokens. Deterministic. Pure Bash.
+
+   # --- Signal 1: Code Files ---
+   CODE_FILES=$(find . \
+     -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \
+     -o -name "*.py" -o -name "*.rb" -o -name "*.php" -o -name "*.go" \
+     -o -name "*.rs" -o -name "*.ex" -o -name "*.exs" \
+     -o -name "*.swift" -o -name "*.m" -o -name "*.dart" -o -name "*.kt" \
+     -o -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" -o -name "*.zig" \
+     -o -name "*.java" -o -name "*.kts" -o -name "*.scala" -o -name "*.clj" \
+     -o -name "*.cljs" -o -name "*.groovy" \
+     -o -name "*.cs" -o -name "*.fs" -o -name "*.vb" \
+     -o -name "*.lua" -o -name "*.ml" -o -name "*.hs" -o -name "*.r" -o -name "*.jl" \
+     2>/dev/null \
+     | grep -v node_modules | grep -v '/.git/' | grep -v vendor \
+     | grep -v '/dist/' | grep -v '/build/' | grep -v '/.next/' \
+     | grep -v __pycache__ | grep -v '/target/' | grep -v _generated \
+     | grep -v '/.turbo/' | grep -v '/coverage/' | grep -v '/.cache/')
+   CODE_FILE_COUNT=$(echo "$CODE_FILES" | grep . 2>/dev/null | wc -l | tr -d ' ')
+
+   # --- Signal 2: Package Manager ---
+   HAS_PACKAGE=$(ls package.json requirements.txt Cargo.toml go.mod \
+     pyproject.toml Gemfile composer.json *.csproj pom.xml build.gradle \
+     build.gradle.kts mix.exs pubspec.yaml Package.swift \
+     setup.py setup.cfg Pipfile 2>/dev/null | head -1)
+
+   # --- Signal 3: Git History ---
+   GIT_COMMIT_COUNT=$(git rev-list --count HEAD 2>/dev/null || echo "0")
+
+   # --- Signal 4: Directory Structure ---
+   SRC_DIR_COUNT=$(find . -type d \
+     -not -path '*/node_modules/*' -not -path '*/.git/*' \
+     -not -path '*/vendor/*' -not -path '*/dist/*' \
+     -not -path '*/build/*' -not -path '*/.next/*' \
+     -not -path '*/__pycache__/*' -not -path '*/target/*' \
+     -not -path '*/_generated/*' -not -path '*/.turbo/*' \
+     -not -path '*/coverage/*' -not -path '*/.cache/*' \
+     2>/dev/null | wc -l | tr -d ' ')
+
+   # --- Signal 5: Codebase Map ---
+   HAS_CODEBASE_MAP=$([ -d .planning/codebase ] && echo "yes" || echo "no")
+
+   # --- Language Detection ---
+   detect_primary_language() {
+     local max_count=0
+     local max_lang="Unknown"
+
+     count_ext() {
+       local ext="$1"
+       local lang="$2"
+       local count
+       count=$(echo "$CODE_FILES" | grep "\\.${ext}$" 2>/dev/null | wc -l | tr -d ' ')
+       if [ "$count" -gt "$max_count" ]; then
+         max_count=$count
+         max_lang=$lang
+       fi
+     }
+
+     count_ext "ts" "TypeScript"; count_ext "tsx" "TypeScript"
+     count_ext "js" "JavaScript"; count_ext "jsx" "JavaScript"
+     count_ext "py" "Python"
+     count_ext "rb" "Ruby"
+     count_ext "php" "PHP"
+     count_ext "go" "Go"
+     count_ext "rs" "Rust"
+     count_ext "ex" "Elixir"; count_ext "exs" "Elixir"
+     count_ext "swift" "Swift"; count_ext "m" "Swift"
+     count_ext "dart" "Dart"
+     count_ext "kt" "Kotlin"
+     count_ext "c" "C/C++"; count_ext "cpp" "C/C++"
+     count_ext "h" "C/C++"; count_ext "hpp" "C/C++"
+     count_ext "zig" "Zig"
+     count_ext "java" "Java"
+     count_ext "kts" "Kotlin"
+     count_ext "scala" "Scala"
+     count_ext "clj" "Clojure"; count_ext "cljs" "Clojure"
+     count_ext "groovy" "Groovy"
+     count_ext "cs" "C#"
+     count_ext "fs" "F#"
+     count_ext "vb" "VB.NET"
+     count_ext "lua" "Lua"
+     count_ext "ml" "OCaml"
+     count_ext "hs" "Haskell"
+     count_ext "r" "R"
+     count_ext "jl" "Julia"
+
+     echo "$max_lang"
+   }
+
+   PRIMARY_LANG=$(detect_primary_language)
+
+   # --- Mode Determination ---
+   if [ "$CODE_FILE_COUNT" -eq 0 ] && [ -z "$HAS_PACKAGE" ]; then
+     MODE="greenfield"
+   elif [ "$CODE_FILE_COUNT" -le 10 ] && [ "$GIT_COMMIT_COUNT" -le 3 ]; then
+     MODE="scaffolded"
+   elif [ "$CODE_FILE_COUNT" -gt 10 ] || { [ -n "$HAS_PACKAGE" ] && [ "$GIT_COMMIT_COUNT" -gt 10 ]; }; then
+     MODE="brownfield"
+   else
+     MODE="greenfield"
+   fi
+
+   # --- Diagnostic Output ---
+   echo "MODE=$MODE"
+   echo "CODE_FILE_COUNT=$CODE_FILE_COUNT"
+   echo "PRIMARY_LANG=$PRIMARY_LANG"
+   echo "HAS_PACKAGE=$HAS_PACKAGE"
+   echo "GIT_COMMIT_COUNT=$GIT_COMMIT_COUNT"
+   echo "SRC_DIR_COUNT=$SRC_DIR_COUNT"
+   echo "HAS_CODEBASE_MAP=$HAS_CODEBASE_MAP"
    ```
 
    **You MUST run all bash commands above using the Bash tool before proceeding.**
