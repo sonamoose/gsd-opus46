@@ -249,7 +249,11 @@ After user runs /gsd:plan-phase {Z} --gaps:
 </offer_next>
 
 <wave_execution>
-**Parallel spawning:**
+
+```bash
+# Check Agent Teams availability
+AGENT_TEAMS=$(echo $CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS)
+```
 
 Before spawning, read file contents. The `@` syntax does not work across Task() boundaries.
 
@@ -260,6 +264,17 @@ PLAN_02_CONTENT=$(cat "{plan_02_path}")
 PLAN_03_CONTENT=$(cat "{plan_03_path}")
 STATE_CONTENT=$(cat .planning/STATE.md)
 ```
+
+**If `AGENT_TEAMS` is set:**
+
+Output: "Executing with Opus 4.6 Agent Teams..."
+
+Spawn multiple agents to execute independent plans in parallel via Agent Teams.
+Each teammate claims a plan from the shared task list and executes autonomously.
+Also delegate map-codebase analysis to Agent Teams when running as part of phase execution.
+Wait for all teammates to complete, then clean up team.
+
+**If `AGENT_TEAMS` is NOT set (default):**
 
 Spawn all plans in a wave with a single message containing multiple Task calls, with inlined content:
 
