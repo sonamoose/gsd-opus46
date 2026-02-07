@@ -14,10 +14,10 @@
 
 ### Codebase Analysis (코드베이스 분석)
 
-- [ ] **ANALYSIS-01**: 4방면 병렬 분석 — 구조/아키텍처, 기술 스택, 문제점/기술부채, 테스트 상태
-- [ ] **ANALYSIS-02**: 사용자 친화적 분석 요약 대시보드 — 7개 원문서를 10줄 이내로 요약 제시
-- [ ] **ANALYSIS-03**: 문제점 우선순위 랭킹 — critical/moderate/minor 분류 및 중요도 순 정렬
-- [ ] **ANALYSIS-04**: 영역 스코프 분석 — 특정 서브디렉토리만 집중 분석 옵션
+- [x] **ANALYSIS-01**: 4방면 병렬 분석 — 구조/아키텍처, 기술 스택, 문제점/기술부채, 테스트 상태
+- [x] **ANALYSIS-02**: 사용자 친화적 분석 요약 대시보드 — 7개 원문서를 10줄 이내로 요약 제시
+- [x] **ANALYSIS-03**: 문제점 우선순위 랭킹 — critical/moderate/minor 분류 및 중요도 순 정렬
+- [x] **ANALYSIS-04**: 영역 스코프 분석 — 특정 서브디렉토리만 집중 분석 옵션
 
 ### Purpose Routing (목적 라우팅)
 
@@ -35,7 +35,7 @@
 ### Infrastructure (인프라)
 
 - [x] **INFRA-01**: gsd-brownfield-analyzer 에이전트 생성 — 7개 코드베이스 문서를 종합 분석
-- [ ] **INFRA-02**: brownfield-flow 워크플로우 생성 — 분석→결정→실행 파이프라인 오케스트레이션
+- [x] **INFRA-02**: brownfield-flow 워크플로우 생성 — 분석→결정→실행 파이프라인 오케스트레이션
 - [x] **INFRA-03**: brownfield-summary 템플릿 생성 — 분석 결과 요약 출력 구조 정의
 - [ ] **INFRA-04**: new-project.md 커맨드 수정 — Phase 2-4에 브라운필드 분기 로직 통합
 
@@ -73,11 +73,11 @@
 | DETECT-04 | Phase 1 | Foundation | Complete |
 | INFRA-01 | Phase 1 | Foundation | Complete |
 | INFRA-03 | Phase 1 | Foundation | Complete |
-| ANALYSIS-01 | Phase 2 | Analysis Pipeline | Pending |
-| ANALYSIS-02 | Phase 2 | Analysis Pipeline | Pending |
-| ANALYSIS-03 | Phase 2 | Analysis Pipeline | Pending |
-| ANALYSIS-04 | Phase 2 | Analysis Pipeline | Pending |
-| INFRA-02 | Phase 2 | Analysis Pipeline | Pending |
+| ANALYSIS-01 | Phase 2 | Analysis Pipeline | Complete |
+| ANALYSIS-02 | Phase 2 | Analysis Pipeline | Complete |
+| ANALYSIS-03 | Phase 2 | Analysis Pipeline | Complete |
+| ANALYSIS-04 | Phase 2 | Analysis Pipeline | Complete |
+| INFRA-02 | Phase 2 | Analysis Pipeline | Complete |
 | ROUTE-01 | Phase 3 | Purpose Routing | Pending |
 | ROUTE-02 | Phase 3 | Purpose Routing | Pending |
 | ROUTE-03 | Phase 3 | Purpose Routing | Pending |
@@ -101,4 +101,4 @@
 
 ---
 *Requirements defined: 2026-02-08*
-*Last updated: 2026-02-08 after roadmap phase mapping*
+*Last updated: 2026-02-08 after Phase 2 completion*
