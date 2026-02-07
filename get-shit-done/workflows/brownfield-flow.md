@@ -89,6 +89,19 @@ Return executive summary confirmation only (~20 lines).
 ```
 
 Wait for the agent to complete.
+
+**If the agent fails or returns an error:**
+- Inform the user: "코드베이스 분석 에이전트가 실패했습니다."
+- Check if `.planning/brownfield-analysis.md` was partially written. If so, note partial state.
+- Offer to retry the analysis or proceed with limited context.
+- If retry: re-spawn the agent with the same parameters.
+- If proceed: skip to return_result with health="Unknown" and empty concerns.
+
+**If the agent returns a scope-empty message:**
+- Present the scope-empty message to the user (the agent returns this instead of writing a file).
+- Offer to retry with a broader scope or without scope.
+- Do NOT continue to present_dashboard (there is no file to read).
+
 Read the agent's return value for the executive summary confirmation (health rating, summary table, top concerns).
 
 Continue to present_dashboard.
@@ -96,6 +109,9 @@ Continue to present_dashboard.
 
 <step name="present_dashboard">
 Read the executive summary from the agent's output file and present it inline to the user.
+
+**First, verify the file exists:**
+Check if `.planning/brownfield-analysis.md` exists. If the file does not exist, inform the user that analysis output is missing and offer to retry the analysis step.
 
 Read `.planning/brownfield-analysis.md` — extract the content from the beginning through the end of the "Top Concerns" section (approximately the first 30-40 lines, stopping before the "Architecture Overview" section).
 
@@ -371,6 +387,18 @@ Create a purpose-aware roadmap for this brownfield project:
 ```
 
 Wait for agent to complete.
+
+**If agent returns `## ROADMAP BLOCKED`:**
+- Present the blocker information to the user
+- Ask the user to provide missing context or resolve the issue
+- Re-spawn the roadmapper agent with updated context when resolved
+
+**If agent fails or returns an error:**
+- Inform the user that roadmap generation failed
+- Present what was gathered so far (purpose, questioning output, analysis)
+- Offer to retry or to proceed manually with `/gsd:plan-phase 1`
+
+**If agent returns `## ROADMAP CREATED`:**
 Read and present the roadmap summary to the user.
 
 Return structured result:

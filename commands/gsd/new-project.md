@@ -68,6 +68,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
    # --- Signal 1: Code Files ---
    CODE_FILES=$(find . \
      -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \
+     -o -name "*.vue" -o -name "*.svelte" -o -name "*.astro" \
      -o -name "*.py" -o -name "*.rb" -o -name "*.php" -o -name "*.go" \
      -o -name "*.rs" -o -name "*.ex" -o -name "*.exs" \
      -o -name "*.swift" -o -name "*.m" -o -name "*.dart" -o -name "*.kt" \
@@ -76,6 +77,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
      -o -name "*.cljs" -o -name "*.groovy" \
      -o -name "*.cs" -o -name "*.fs" -o -name "*.vb" \
      -o -name "*.lua" -o -name "*.ml" -o -name "*.hs" -o -name "*.r" -o -name "*.jl" \
+     -o -name "*.erl" -o -name "*.elm" \
      2>/dev/null \
      | grep -v node_modules | grep -v '/.git/' | grep -v vendor \
      | grep -v '/dist/' | grep -v '/build/' | grep -v '/.next/' \
@@ -123,6 +125,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
 
      count_ext "ts" "TypeScript"; count_ext "tsx" "TypeScript"
      count_ext "js" "JavaScript"; count_ext "jsx" "JavaScript"
+     count_ext "vue" "Vue"; count_ext "svelte" "Svelte"; count_ext "astro" "Astro"
      count_ext "py" "Python"
      count_ext "rb" "Ruby"
      count_ext "php" "PHP"
@@ -148,6 +151,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
      count_ext "hs" "Haskell"
      count_ext "r" "R"
      count_ext "jl" "Julia"
+     count_ext "erl" "Erlang"; count_ext "elm" "Elm"
 
      echo "$max_lang"
    }
@@ -165,6 +169,12 @@ This is the most leveraged moment in any project. Deep questioning here means be
      MODE="greenfield"
    fi
 
+   # --- Sanity Check: detect potential misclassification ---
+   DETECTION_WARNING=""
+   if [ "$CODE_FILE_COUNT" -eq 0 ] && { [ "$SRC_DIR_COUNT" -gt 5 ] || [ -n "$HAS_PACKAGE" ] || [ "$GIT_COMMIT_COUNT" -gt 10 ]; }; then
+     DETECTION_WARNING="WARNING: 0 code files detected but project has signals suggesting existing code (dirs=$SRC_DIR_COUNT, package=$HAS_PACKAGE, commits=$GIT_COMMIT_COUNT). The codebase may use file extensions not in the detection list. Consider brownfield mode."
+   fi
+
    # --- Diagnostic Output ---
    echo "MODE=$MODE"
    echo "CODE_FILE_COUNT=$CODE_FILE_COUNT"
@@ -173,13 +183,20 @@ This is the most leveraged moment in any project. Deep questioning here means be
    echo "GIT_COMMIT_COUNT=$GIT_COMMIT_COUNT"
    echo "SRC_DIR_COUNT=$SRC_DIR_COUNT"
    echo "HAS_CODEBASE_MAP=$HAS_CODEBASE_MAP"
+   [ -n "$DETECTION_WARNING" ] && echo "$DETECTION_WARNING"
    ```
 
    **You MUST run all bash commands above using the Bash tool before proceeding.**
 
 ## Phase 2: Mode Routing
 
-Check the `MODE` variable from Phase 1 detection:
+Check the `MODE` variable from Phase 1 detection.
+
+**If DETECTION_WARNING is present in the output:**
+The detection found 0 code files but other signals suggest existing code. Ask the user:
+"감지된 코드 파일이 0개이지만 프로젝트 신호(디렉토리/패키지/커밋)가 감지되었습니다. 기존 코드베이스로 처리할까요?"
+If user says yes: set MODE to "brownfield" and continue to Phase 2B.
+If user says no: continue with greenfield.
 
 **If MODE == "greenfield":**
 No existing code detected. Continue directly to Phase 3 (Deep Questioning).
