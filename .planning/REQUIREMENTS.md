@@ -28,8 +28,8 @@
 
 ### State Management (상태 관리)
 
-- [ ] **STATE-01**: 브라운필드 PROJECT.md에 기존 기능을 Validated 요구사항으로 자동 추론
-- [ ] **STATE-02**: 분석 컨텍스트가 다운스트림 워크플로우(planner, executor)에 전달
+- [x] **STATE-01**: 브라운필드 PROJECT.md에 기존 기능을 Validated 요구사항으로 자동 추론
+- [x] **STATE-02**: 분석 컨텍스트가 다운스트림 워크플로우(planner, executor)에 전달
 - [x] **STATE-03**: 그린필드 워크플로우 무변경 보장 — 기존 동작 회귀 없음
 
 ### Infrastructure (인프라)
@@ -84,8 +84,8 @@
 | ROUTE-04 | Phase 3 | Purpose Routing | Complete |
 | INFRA-04 | Phase 4 | Command Integration | Complete |
 | STATE-03 | Phase 4 | Command Integration | Complete |
-| STATE-01 | Phase 5 | State Integration | Pending |
-| STATE-02 | Phase 5 | State Integration | Pending |
+| STATE-01 | Phase 5 | State Integration | Complete |
+| STATE-02 | Phase 5 | State Integration | Complete |
 
 **Coverage:**
 - v1 requirements: 19 total
@@ -101,4 +101,4 @@
 
 ---
 *Requirements defined: 2026-02-08*
-*Last updated: 2026-02-08 after Phase 4 completion (ROUTE-01~04, INFRA-04, STATE-03 marked Complete)*
+*Last updated: 2026-02-08 after Phase 5 completion (STATE-01, STATE-02 marked Complete — all 19 v1 requirements complete)*
