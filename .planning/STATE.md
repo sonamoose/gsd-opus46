@@ -7,17 +7,34 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 
 ## Current Status
 **Milestone:** v1.0 — Brownfield Mode
-**Phase:** 1 — Foundation (템플릿 + 에이전트 + 감지 로직)
-**Status:** Complete ✓ (3/3 plans, 14/14 must-haves verified)
+**Phase:** 2 — Analysis Pipeline (워크플로우 + 분석 기능)
+**Status:** In progress (1/2 plans complete)
+
+## Current Position
+
+Phase: 2 of 5 (Analysis Pipeline)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-08 - Completed 02-01-PLAN.md
+
+Progress: ████░░░░░░ 40%
 
 ## Progress
 | Phase | Name | Status | Plans | Progress |
 |-------|------|--------|-------|----------|
 | 1 | Foundation | ✓ | 3/3 | 100% |
-| 2 | Analysis Pipeline | ○ | 0/? | 0% |
+| 2 | Analysis Pipeline | ◐ | 1/2 | 50% |
 | 3 | Purpose Routing | ○ | 0/? | 0% |
 | 4 | Command Integration | ○ | 0/? | 0% |
 | 5 | State Integration + Polish | ○ | 0/? | 0% |
+
+## Decisions
+
+| Phase | Decision | Rationale |
+|-------|----------|-----------|
+| 02-01 | Severity criteria use observable conditions, not subjective judgment | Ensures any Claude instance classifies consistently |
+| 02-01 | Scope filtering at extraction time, not post-processing | Maintains agent's single-pass synthesis approach |
+| 02-01 | Zero-findings scope returns message, not empty file | Prevents downstream workflows from consuming empty analysis |
 
 ## Phase Details
 
@@ -31,7 +48,8 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ### Phase 2: Analysis Pipeline
 **Requirements:** ANALYSIS-01, ANALYSIS-02, ANALYSIS-03, ANALYSIS-04, INFRA-02
 **Key artifacts:**
-- `get-shit-done/workflows/brownfield-flow.md` — 분석→결정→실행 파이프라인
+- `agents/gsd-brownfield-analyzer.md` — severity classification + scoped analysis (MODIFIED in 02-01)
+- `get-shit-done/workflows/brownfield-flow.md` — 분석→결정→실행 파이프라인 (02-02)
 
 ### Phase 3: Purpose Routing
 **Requirements:** ROUTE-01, ROUTE-02, ROUTE-03, ROUTE-04
@@ -50,6 +68,12 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 - `get-shit-done/templates/project.md` — Codebase Mode 섹션 추가
 - `get-shit-done/templates/state.md` — 브라운필드 컨텍스트 참조 추가
 
+## Session Continuity
+
+Last session: 2026-02-08
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
+
 ## Notes
 - 빌드 순서는 ARCHITECTURE.md 연구의 의존성 그래프에 따름
 - 각 Phase는 독립적으로 테스트 가능
@@ -57,4 +81,4 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 
 ---
 *State initialized: 2026-02-08*
-*Last updated: 2026-02-08 after Phase 1 execution complete*
+*Last updated: 2026-02-08 after 02-01-PLAN.md execution complete*
