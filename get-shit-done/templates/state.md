@@ -66,6 +66,14 @@ None yet.
 
 None yet.
 
+### Codebase Context
+
+<!-- For brownfield projects only. Omit for greenfield. -->
+
+**Analysis:** `.planning/brownfield-analysis.md`
+**Purpose:** [Fix / Improve / Refactor]
+**Health:** [Good / Moderate / Concerning]
+
 ## Session Continuity
 
 Last session: [YYYY-MM-DD HH:MM]
@@ -93,6 +101,7 @@ STATE.md is the project's short-term memory spanning all phases and sessions.
 - Reference PROJECT.md (read it for current context)
 - Initialize empty accumulated context sections
 - Set position to "Phase 1 ready to plan"
+- If brownfield: populate Codebase Context with analysis reference, purpose, and health from brownfield-flow results
 
 **Reading:** First step of every workflow
 - progress: Present status to user
@@ -154,6 +163,13 @@ Updated after each plan completion.
 - Issues that affect future work
 - Prefix with originating phase
 - Cleared when addressed
+
+**Codebase Context:** For brownfield projects only.
+- Analysis reference to .planning/brownfield-analysis.md
+- Purpose (Fix/Improve/Refactor) from user selection during brownfield-flow
+- Health rating from analysis summary
+- Enables downstream agents to quickly identify brownfield mode and link to detailed analysis
+- Omit entirely for greenfield projects
 
 ### Session Continuity
 Enables instant resumption:
