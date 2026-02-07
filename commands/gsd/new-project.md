@@ -11,17 +11,19 @@ allowed-tools:
 
 <objective>
 
-Initialize a new project through unified flow: questioning → research (optional) → requirements → roadmap.
+Initialize a new project through unified flow. Greenfield: questioning -> research (optional) -> requirements -> roadmap. Brownfield: map-codebase -> analysis -> purpose routing -> roadmap.
 
 This is the most leveraged moment in any project. Deep questioning here means better plans, better execution, better outcomes. One command takes you from idea to ready-for-planning.
 
 **Creates:**
 - `.planning/PROJECT.md` — project context
 - `.planning/config.json` — workflow preferences
-- `.planning/research/` — domain research (optional)
+- `.planning/research/` — domain research (optional, greenfield)
 - `.planning/REQUIREMENTS.md` — scoped requirements
 - `.planning/ROADMAP.md` — phase structure
 - `.planning/STATE.md` — project memory
+- `.planning/brownfield-analysis.md` — codebase analysis (brownfield only)
+- `.planning/codebase/` — codebase documents (brownfield only)
 
 **After this command:** Run `/gsd:plan-phase 1` to start execution.
 
@@ -1162,7 +1164,7 @@ Brownfield analysis and purpose routing complete.
 
 - `.planning/PROJECT.md`
 - `.planning/config.json`
-- `.planning/research/` (if research selected)
+- `.planning/research/` (if research selected, greenfield)
   - `STACK.md`
   - `FEATURES.md`
   - `ARCHITECTURE.md`
@@ -1171,6 +1173,9 @@ Brownfield analysis and purpose routing complete.
 - `.planning/REQUIREMENTS.md`
 - `.planning/ROADMAP.md`
 - `.planning/STATE.md`
+- `.planning/brownfield-analysis.md` (if brownfield)
+- `.planning/codebase/` (if brownfield)
+- `.planning/debug/` (if brownfield fix mode with debug bridge)
 
 </output>
 
@@ -1193,6 +1198,10 @@ Brownfield analysis and purpose routing complete.
 - [ ] STATE.md initialized
 - [ ] REQUIREMENTS.md traceability updated
 - [ ] User knows next step is `/gsd:discuss-phase 1`
+- [ ] MODE detection completed (greenfield/scaffolded/brownfield)
+- [ ] If brownfield: codebase mapped, analysis complete, purpose routing done
+- [ ] If brownfield: brownfield PROJECT.md with Validated requirements committed
+- [ ] If brownfield: ROADMAP.md, STATE.md, REQUIREMENTS.md produced by brownfield-flow
 
 **Atomic commits:** Each phase commits its artifacts immediately. If context is lost, artifacts persist.
 
