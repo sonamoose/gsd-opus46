@@ -9,10 +9,17 @@
 ### Phase 1: Foundation (템플릿 + 에이전트 + 감지 로직)
 **Goal:** 브라운필드 분석의 기반 컴포넌트(템플릿, 에이전트 정의, 모드 감지 로직)를 생성하여 이후 파이프라인의 토대를 마련한다.
 **Requirements:** DETECT-01, DETECT-02, DETECT-03, DETECT-04, INFRA-01, INFRA-03
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — brownfield-summary.md 분석 요약 출력 템플릿 생성
+- [ ] 01-02-PLAN.md — gsd-brownfield-analyzer.md 코드베이스 분석 에이전트 정의
+- [ ] 01-03-PLAN.md — 모드 감지 로직 사양 (다중 시그널 + 언어 감지 + 스캐폴딩 다운그레이드)
+
 **Artifacts:**
 - `get-shit-done/templates/brownfield-summary.md` (NEW)
 - `agents/gsd-brownfield-analyzer.md` (NEW)
-- Mode detection logic module (for later integration into new-project.md)
+- `get-shit-done/references/brownfield-detection.md` (NEW)
 
 **Success Criteria:**
 1. `brownfield-summary.md` 템플릿이 7개 코드베이스 문서 영역(Architecture, Stack, Concerns, Testing, Structure, Integrations, Conventions)을 구조화된 섹션으로 정의한다.
