@@ -21,23 +21,23 @@
 
 ### Purpose Routing (목적 라우팅)
 
-- [ ] **ROUTE-01**: 분석 결과 확인 후 '버그 수정' vs '기능 개선' 목적 선택
-- [ ] **ROUTE-02**: 목적별 맞춤 질문 흐름 — 수정 모드와 개선 모드에서 다른 질문 스레드
-- [ ] **ROUTE-03**: 문제점-디버그 세션 브릿징 — CONCERNS.md 발견사항을 디버그 세션에 자동 프리필
-- [ ] **ROUTE-04**: 분석 결과 기반 로드맵 자동 생성 — 수정은 심각도순, 개선은 의존성순 로드맵
+- [x] **ROUTE-01**: 분석 결과 확인 후 '버그 수정' vs '기능 개선' 목적 선택
+- [x] **ROUTE-02**: 목적별 맞춤 질문 흐름 — 수정 모드와 개선 모드에서 다른 질문 스레드
+- [x] **ROUTE-03**: 문제점-디버그 세션 브릿징 — CONCERNS.md 발견사항을 디버그 세션에 자동 프리필
+- [x] **ROUTE-04**: 분석 결과 기반 로드맵 자동 생성 — 수정은 심각도순, 개선은 의존성순 로드맵
 
 ### State Management (상태 관리)
 
 - [ ] **STATE-01**: 브라운필드 PROJECT.md에 기존 기능을 Validated 요구사항으로 자동 추론
 - [ ] **STATE-02**: 분석 컨텍스트가 다운스트림 워크플로우(planner, executor)에 전달
-- [ ] **STATE-03**: 그린필드 워크플로우 무변경 보장 — 기존 동작 회귀 없음
+- [x] **STATE-03**: 그린필드 워크플로우 무변경 보장 — 기존 동작 회귀 없음
 
 ### Infrastructure (인프라)
 
 - [x] **INFRA-01**: gsd-brownfield-analyzer 에이전트 생성 — 7개 코드베이스 문서를 종합 분석
 - [x] **INFRA-02**: brownfield-flow 워크플로우 생성 — 분석→결정→실행 파이프라인 오케스트레이션
 - [x] **INFRA-03**: brownfield-summary 템플릿 생성 — 분석 결과 요약 출력 구조 정의
-- [ ] **INFRA-04**: new-project.md 커맨드 수정 — Phase 2-4에 브라운필드 분기 로직 통합
+- [x] **INFRA-04**: new-project.md 커맨드 수정 — Phase 2-4에 브라운필드 분기 로직 통합
 
 ## v2 Requirements
 
@@ -78,12 +78,12 @@
 | ANALYSIS-03 | Phase 2 | Analysis Pipeline | Complete |
 | ANALYSIS-04 | Phase 2 | Analysis Pipeline | Complete |
 | INFRA-02 | Phase 2 | Analysis Pipeline | Complete |
-| ROUTE-01 | Phase 3 | Purpose Routing | Pending |
-| ROUTE-02 | Phase 3 | Purpose Routing | Pending |
-| ROUTE-03 | Phase 3 | Purpose Routing | Pending |
-| ROUTE-04 | Phase 3 | Purpose Routing | Pending |
-| INFRA-04 | Phase 4 | Command Integration | Pending |
-| STATE-03 | Phase 4 | Command Integration | Pending |
+| ROUTE-01 | Phase 3 | Purpose Routing | Complete |
+| ROUTE-02 | Phase 3 | Purpose Routing | Complete |
+| ROUTE-03 | Phase 3 | Purpose Routing | Complete |
+| ROUTE-04 | Phase 3 | Purpose Routing | Complete |
+| INFRA-04 | Phase 4 | Command Integration | Complete |
+| STATE-03 | Phase 4 | Command Integration | Complete |
 | STATE-01 | Phase 5 | State Integration | Pending |
 | STATE-02 | Phase 5 | State Integration | Pending |
 
@@ -101,4 +101,4 @@
 
 ---
 *Requirements defined: 2026-02-08*
-*Last updated: 2026-02-08 after Phase 2 completion*
+*Last updated: 2026-02-08 after Phase 4 completion (ROUTE-01~04, INFRA-04, STATE-03 marked Complete)*
