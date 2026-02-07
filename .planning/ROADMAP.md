@@ -36,7 +36,7 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md — brownfield-analyzer 에이전트 강화 (심각도 분류 기준 + 영역 스코프 분석 로직)
-- [ ] 02-02-PLAN.md — brownfield-flow.md 분석 파이프라인 워크플로우 생성
+- [x] 02-02-PLAN.md — brownfield-flow.md 분석 파이프라인 워크플로우 생성
 
 **Artifacts:**
 - `get-shit-done/workflows/brownfield-flow.md` (NEW)

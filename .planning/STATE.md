@@ -8,22 +8,22 @@ See: .planning/PROJECT.md (updated 2026-02-08)
 ## Current Status
 **Milestone:** v1.0 — Brownfield Mode
 **Phase:** 2 — Analysis Pipeline (워크플로우 + 분석 기능)
-**Status:** In progress (1/2 plans complete)
+**Status:** Complete ✓ (2/2 plans complete)
 
 ## Current Position
 
 Phase: 2 of 5 (Analysis Pipeline)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-02-08 - Completed 02-01-PLAN.md
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-02-08 - Completed 02-02-PLAN.md
 
-Progress: ████░░░░░░ 40%
+Progress: █████░░░░░ 50%
 
 ## Progress
 | Phase | Name | Status | Plans | Progress |
 |-------|------|--------|-------|----------|
 | 1 | Foundation | ✓ | 3/3 | 100% |
-| 2 | Analysis Pipeline | ◐ | 1/2 | 50% |
+| 2 | Analysis Pipeline | ✓ | 2/2 | 100% |
 | 3 | Purpose Routing | ○ | 0/? | 0% |
 | 4 | Command Integration | ○ | 0/? | 0% |
 | 5 | State Integration + Polish | ○ | 0/? | 0% |
@@ -35,6 +35,9 @@ Progress: ████░░░░░░ 40%
 | 02-01 | Severity criteria use observable conditions, not subjective judgment | Ensures any Claude instance classifies consistently |
 | 02-01 | Scope filtering at extraction time, not post-processing | Maintains agent's single-pass synthesis approach |
 | 02-01 | Zero-findings scope returns message, not empty file | Prevents downstream workflows from consuming empty analysis |
+| 02-02 | Workflow reads only agent output, never codebase input docs | Keeps orchestrator lean, follows map-codebase delegation pattern |
+| 02-02 | Scope is caller-provided parameter, not interactive prompt | Keeps workflow non-interactive for Phase 2 analysis-only scope |
+| 02-02 | Analysis-only with explicit Phase 3 extension point | Avoids stub code; Phase 3 extends the same file with purpose routing |
 
 ## Phase Details
 
@@ -71,7 +74,7 @@ Progress: ████░░░░░░ 40%
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 02-01-PLAN.md
+Stopped at: Completed 02-02-PLAN.md (Phase 2 complete)
 Resume file: None
 
 ## Notes
@@ -81,4 +84,4 @@ Resume file: None
 
 ---
 *State initialized: 2026-02-08*
-*Last updated: 2026-02-08 after 02-01-PLAN.md execution complete*
+*Last updated: 2026-02-08 after 02-02-PLAN.md execution complete (Phase 2 complete)*
