@@ -577,6 +577,8 @@ See `~/.claude/get-shit-done/references/model-profiles.md` for recommended level
 
 ## Phase 6: Research Decision
 
+**If MODE == "brownfield":** Skip this phase. Brownfield analysis serves as domain research. Continue to Phase 10 (Done).
+
 Use AskUserQuestion:
 - header: "Research"
 - question: "Research the domain ecosystem before defining requirements?"
@@ -822,6 +824,8 @@ Files: `.planning/research/`
 
 ## Phase 7: Define Requirements
 
+**If MODE == "brownfield":** Skip this phase. brownfield-flow already produced REQUIREMENTS.md. Continue to Phase 10 (Done).
+
 Display stage banner:
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -965,6 +969,8 @@ EOF
 
 ## Phase 8: Create Roadmap
 
+**If MODE == "brownfield":** Skip this phase. brownfield-flow already produced ROADMAP.md. Continue to Phase 10 (Done).
+
 Display stage banner:
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1107,7 +1113,9 @@ EOF
 
 ## Phase 10: Done
 
-Present completion with next steps:
+Present completion with next steps.
+
+**Build the artifact table dynamically** based on which files exist:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1116,15 +1124,21 @@ Present completion with next steps:
 
 **[Project Name]**
 
-| Artifact       | Location                    |
-|----------------|-----------------------------|
-| Project        | `.planning/PROJECT.md`      |
-| Config         | `.planning/config.json`     |
-| Research       | `.planning/research/`       |
-| Requirements   | `.planning/REQUIREMENTS.md` |
-| Roadmap        | `.planning/ROADMAP.md`      |
+| Artifact       | Location                           |
+|----------------|-------------------------------------|
+| Project        | `.planning/PROJECT.md`              |
+| Config         | `.planning/config.json`             |
+{If .planning/brownfield-analysis.md exists:}
+| Analysis       | `.planning/brownfield-analysis.md`  |
+{If .planning/research/ exists:}
+| Research       | `.planning/research/`               |
+| Requirements   | `.planning/REQUIREMENTS.md`         |
+| Roadmap        | `.planning/ROADMAP.md`              |
 
 **[N] phases** | **[X] requirements** | Ready to build ✓
+
+{If MODE == "brownfield":}
+Brownfield analysis and purpose routing complete.
 
 ───────────────────────────────────────────────────────────────
 
