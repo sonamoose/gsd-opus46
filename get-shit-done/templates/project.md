@@ -48,6 +48,17 @@ One sentence that drives prioritization when tradeoffs arise.]
 - User research or feedback themes
 - Known issues to address]
 
+## Codebase Context
+
+<!-- For brownfield projects only. Omit entire section for greenfield. -->
+
+**Mode:** brownfield
+**Primary Language:** [Language from detection]
+**Analysis:** `.planning/brownfield-analysis.md`
+**Health:** [Good / Moderate / Concerning]
+**Purpose:** [Fix / Improve / Refactor]
+**Codebase Map:** `.planning/codebase/`
+
 ## Constraints
 
 - **[Type]**: [What] — [Why]
@@ -104,6 +115,15 @@ Common types: Tech stack, Timeline, Budget, Dependencies, Compatibility, Perform
 - Known issues or technical debt to address
 - Update as new context emerges
 
+**Codebase Context:**
+- Only present for brownfield projects; omit entirely for greenfield
+- Mode is always "brownfield" when this section exists
+- Primary Language from automatic detection during brownfield-flow
+- Analysis references .planning/brownfield-analysis.md for detailed findings
+- Health rating (Good/Moderate/Concerning) from analysis summary
+- Purpose (Fix/Improve/Refactor) from user selection
+- Codebase Map references .planning/codebase/ for full code documentation
+
 **Constraints:**
 - Hard limits on implementation choices
 - Tech stack, timeline, budget, compatibility, dependencies
@@ -150,9 +170,12 @@ For existing codebases:
 1. **Map codebase first** via `/gsd:map-codebase`
 
 2. **Infer Validated requirements** from existing code:
+   - Read ARCHITECTURE.md for architecture patterns and key capabilities
+   - Read STACK.md for language, framework, and runtime
    - What does the codebase actually do?
    - What patterns are established?
    - What's clearly working and relied upon?
+   - Format each inferred capability as `- ✓ [Capability description] — existing` in the Validated section
 
 3. **Gather Active requirements** from user:
    - Present inferred current state
@@ -163,6 +186,14 @@ For existing codebases:
    - Active = user's goals for this work
    - Out of Scope = boundaries user specifies
    - Context = includes current codebase state
+
+5. **Populate Codebase Context section:**
+   - Mode: always `brownfield`
+   - Primary Language: from detection during brownfield-flow
+   - Analysis: path to `.planning/brownfield-analysis.md`
+   - Health: from analysis summary rating (Good / Moderate / Concerning)
+   - Purpose: from user selection during brownfield-flow (Fix / Improve / Refactor)
+   - Codebase Map: path to `.planning/codebase/`
 
 </brownfield>
 
