@@ -94,4 +94,64 @@ Read the agent's return value for the executive summary confirmation (health rat
 Continue to present_dashboard.
 </step>
 
+<step name="present_dashboard">
+Read the executive summary from the agent's output file and present it inline to the user.
+
+Read `.planning/brownfield-analysis.md` — extract the content from the beginning through the end of the "Top Concerns" section (approximately the first 30-40 lines, stopping before the "Architecture Overview" section).
+
+Present to the user inline (this IS the 10-line dashboard from ANALYSIS-02):
+
+```
+## Codebase Analysis Complete
+
+**Health:** {health_rating from document header}
+{If scoped: **Scope:** `{scope_path}`}
+
+| Dimension | Finding | Confidence |
+|-----------|---------|------------|
+{7 rows from Executive Summary table}
+
+**Top Concerns:**
+{numbered list of top 3-5 concerns with severity tags}
+
+---
+Full analysis: `.planning/brownfield-analysis.md`
+```
+
+**Important:** Read only the executive summary + top concerns sections from the file. Do NOT read or display the detailed sections (Architecture Overview, Technology Stack, etc.). Those are Tier 2 reference material the user can consult in the file.
+
+Continue to return_result.
+</step>
+
+<step name="return_result">
+Return a structured result to the caller (future new-project.md or manual invocation).
+
+```
+## Analysis Pipeline Complete
+
+**Output:** `.planning/brownfield-analysis.md`
+**Health:** {health_rating}
+**Scope:** {scope_path or "full codebase"}
+**Top concern:** {first concern title and severity}
+
+Ready for purpose routing (Phase 3).
+```
+
+This lightweight return enables the caller to decide next steps based on health rating and top concerns without re-reading the analysis file.
+
+End workflow.
+</step>
+
 </process>
+
+<success_criteria>
+- .planning/codebase/*.md documents verified (prerequisite check)
+- gsd-brownfield-analyzer agent spawned via Task() with optional scope parameter
+- Agent writes .planning/brownfield-analysis.md (workflow does NOT write this file)
+- Executive summary (health + 7-dimension table + top concerns) presented inline to user
+- Inline dashboard is approximately 10 lines of content (table rows + health + concerns header)
+- Structured result returned to caller with health, scope, and top concern
+- Workflow did NOT read .planning/codebase/*.md directly
+- Workflow did NOT write STATE.md or any file besides delegating to agent
+- Workflow did NOT ask user interactive questions (analysis only, no purpose routing)
+</success_criteria>
