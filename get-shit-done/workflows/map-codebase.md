@@ -48,12 +48,81 @@ What's next?
 
 Wait for user response.
 
-If "Refresh": Delete .planning/codebase/, continue to create_structure
-If "Update": Ask which documents to update, continue to spawn_agents (filtered)
+If "Refresh": Continue to snapshot_existing (archive all, then delete and remap)
+If "Update": Ask which documents to update, continue to snapshot_existing (archive selected, then remap)
 If "Skip": Exit workflow
 
 **If doesn't exist:**
 Continue to create_structure.
+</step>
+
+<step name="snapshot_existing">
+Archive current codebase documents before overwriting. This enables incremental analysis (before/after comparison).
+
+**Create snapshot directory with date:**
+
+```bash
+SNAPSHOT_DATE=$(date +%Y-%m-%d)
+SNAPSHOT_DIR=".planning/codebase/snapshots/${SNAPSHOT_DATE}"
+
+# Avoid overwriting same-day snapshot (append counter if needed)
+if [ -d "$SNAPSHOT_DIR" ]; then
+  COUNTER=2
+  while [ -d "${SNAPSHOT_DIR}-${COUNTER}" ]; do
+    COUNTER=$((COUNTER + 1))
+  done
+  SNAPSHOT_DIR="${SNAPSHOT_DIR}-${COUNTER}"
+fi
+
+mkdir -p "$SNAPSHOT_DIR"
+```
+
+**Copy existing documents to snapshot:**
+
+For "Refresh" mode — archive all documents:
+```bash
+cp .planning/codebase/*.md "$SNAPSHOT_DIR/" 2>/dev/null
+```
+
+For "Update" mode — archive only the documents being updated:
+```bash
+# Copy only the selected documents (e.g., STACK.md, CONCERNS.md)
+for DOC in {selected_documents}; do
+  cp ".planning/codebase/${DOC}" "$SNAPSHOT_DIR/" 2>/dev/null
+done
+```
+
+**Also archive brownfield-analysis.md if it exists:**
+```bash
+cp .planning/brownfield-analysis.md "$SNAPSHOT_DIR/" 2>/dev/null
+```
+
+**Write snapshot metadata:**
+
+```bash
+cat > "$SNAPSHOT_DIR/snapshot-meta.md" << METAEOF
+# Snapshot Metadata
+
+**Date:** $(date +%Y-%m-%d)
+**Time:** $(date +%H:%M:%S)
+**Trigger:** map-codebase $([ "$MODE" = "refresh" ] && echo "refresh" || echo "update")
+**Documents archived:**
+$(ls "$SNAPSHOT_DIR"/*.md 2>/dev/null | grep -v snapshot-meta.md | while read f; do echo "- $(basename "$f")"; done)
+METAEOF
+```
+
+**Confirm snapshot:**
+```
+📸 Snapshot saved to ${SNAPSHOT_DIR}/
+[N] documents archived for incremental comparison.
+```
+
+If "Refresh" mode: Delete .planning/codebase/*.md (not snapshots/), continue to create_structure
+```bash
+find .planning/codebase/ -maxdepth 1 -name "*.md" -delete
+```
+
+If "Update" mode: Continue to spawn_agents (filtered)
 </step>
 
 <step name="create_structure">
@@ -333,6 +402,9 @@ End workflow.
 
 <success_criteria>
 - .planning/codebase/ directory created
+- When existing documents found: snapshot archived to .planning/codebase/snapshots/{date}/ before overwriting
+- Snapshot includes snapshot-meta.md with date, trigger, and document list
+- brownfield-analysis.md included in snapshot if it exists
 - 4 parallel gsd-codebase-mapper agents spawned with run_in_background=true
 - Agents write documents directly (orchestrator doesn't receive document contents)
 - Read agent output files to collect confirmations

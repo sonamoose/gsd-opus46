@@ -1,7 +1,7 @@
 # GSD CodeMap
 
 > 초안: 핵심 구조·역할·의존관계 중심. 코드 변경 시 점진적 보강.
-> 최종 갱신: 2026-02-07
+> 최종 갱신: 2026-02-08
 
 
 ## 1. Directory Structure Tree
@@ -14,14 +14,16 @@ refactored/
 │   ├── plan-phase.md             ↓
 │   ├── execute-phase.md          ↓
 │   ├── verify-work.md            ↓
+│   ├── compare-analysis.md     증분 분석 (v1.2 신규)
 │   ├── team-review.md          Opus 4.6 신규
 │   ├── effort-report.md          ↓
 │   ├── compact-state.md          ↓
 │   └── ...                     유틸리티 (progress, settings 등)
 │
-├── agents/                 ← 서브에이전트 정의 (11개)
+├── agents/                 ← 서브에이전트 정의 (12개)
 │   ├── gsd-planner.md          핵심 판단 에이전트
 │   ├── gsd-executor.md         코드 실행 에이전트
+│   ├── gsd-delta-analyzer.md   분석 스냅샷 비교 (v1.2 신규)
 │   └── ...
 │
 ├── get-shit-done/
@@ -36,6 +38,7 @@ refactored/
 │   └── templates/          ← .planning/ 문서 템플릿 (20+개)
 │       ├── state.md            STATE.md 템플릿
 │       ├── roadmap.md          ROADMAP.md 템플릿
+│       ├── delta-report.md     Delta 리포트 템플릿 (v1.2 신규)
 │       ├── codebase/           코드베이스 분석 템플릿 (7개)
 │       └── research-project/   리서치 템플릿 (5개)
 │
@@ -112,6 +115,8 @@ audit-milestone ──→ (자체) ──→ integration-checker
 
 quick ──→ (자체) ──→ planner → executor
 
+compare-analysis ──→ (자체) ──→ delta-analyzer (v1.2 신규)
+
 team-review ──→ (Agent Teams) ──→ 리뷰어 ×3 (신규)
 ```
 
@@ -126,6 +131,7 @@ executor            → phases/XX/SUMMARY.md, 코드, git commit
 verifier            → phases/XX/VERIFICATION.md
 codebase-mapper     → codebase/{stack,architecture,structure,...}.md
 debugger            → debug/{slug}.md
+delta-analyzer      → codebase/DELTA-REPORT.md
 integration-checker → MILESTONE-AUDIT.md
 ```
 

@@ -7,6 +7,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- **증분 분석 (Incremental Analysis)** — 코드베이스 분석의 before/after 비교 기능
+  - `/gsd:compare-analysis` 커맨드 — 스냅샷 선택 → delta-analyzer 스폰 → DELTA-REPORT.md 생성
+  - `gsd-delta-analyzer` 에이전트 — 두 시점의 분석 문서 비교, concerns 해결/신규/지속 추적
+  - `delta-report.md` 템플릿 — Change Summary, Concerns Tracker, Dimension Changes, Impact Assessment
+  - `map-codebase` 스냅샷 메커니즘 — Refresh/Update 시 기존 문서를 `.planning/codebase/snapshots/{date}/`로 자동 아카이브
+  - `audit-milestone` delta 참조 — DELTA-REPORT.md 존재 시 마일스톤 감사에 codebase 변화 맥락 추가
 - **Brownfield Mode** — `/gsd:new-project`이 기존 코드베이스를 자동 감지하고 최적 워크플로우로 분기
   - 5-signal 감지 (코드 파일, 패키지 매니저, Git 히스토리, 디렉토리 구조, 코드베이스 맵)
   - 39개 확장자, 30개 언어 지원 (Vue, Svelte, Astro, Erlang, Elm 포함)

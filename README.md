@@ -431,6 +431,7 @@ You're never locked in. The system adapts.
 |---------|--------------|
 | `/gsd:new-project` | Auto-detects brownfield/greenfield and routes to optimal flow |
 | `/gsd:map-codebase` | Analyze existing codebase (standalone, or auto-triggered by new-project) |
+| `/gsd:compare-analysis` | Compare analysis snapshots — shows what improved/regressed between analyses |
 
 ### Phase Management
 

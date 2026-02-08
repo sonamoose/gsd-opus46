@@ -98,6 +98,19 @@ Combine:
 - Phase-level gaps and tech debt (from step 2)
 - Integration checker's report (wiring gaps, broken flows)
 
+**Check for delta report:**
+
+```bash
+ls .planning/codebase/DELTA-REPORT.md 2>/dev/null
+```
+
+If DELTA-REPORT.md exists, read the Change Summary and Concerns Tracker sections. Include in the audit report:
+- How many codebase concerns were resolved during this milestone
+- Any new concerns introduced
+- Overall codebase health trajectory (from Impact Assessment)
+
+This enriches the audit with before/after codebase context. If no delta report exists, skip this enrichment — the audit proceeds normally.
+
 ## 5. Check Requirements Coverage
 
 For each requirement in REQUIREMENTS.md mapped to this milestone:
